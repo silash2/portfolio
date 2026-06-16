@@ -160,7 +160,75 @@ section:nth-child(even){background:var(--bg2)}
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s,transform .55s}
 .reveal.visible{opacity:1;transform:none}
 
+/* --- BOUTON DE TÉLÉCHARGEMENT CYBERPUNK --- */
+.btn-download-cyber {
+  position: relative;
+  background: #161b22;
+  color: #58a6ff; /* Cyan / Bleu tech */
+  border: 1px solid #30363d;
+  padding: 12px 24px;
+  font-family: var(--ff-mono, monospace);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
 
+.btn-download-cyber .btn-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-download-cyber .btn-content i {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+/* Lueur d'arrière-plan cachée par défaut */
+.btn-download-cyber .btn-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(88, 166, 255, 0.2) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.5s ease;
+  z-index: 1;
+}
+
+/* --- EFFETS AU SURVOL (HOVER) --- */
+.btn-download-cyber:hover {
+  color: #ffffff;
+  border-color: #58a6ff;
+  box-shadow: 0 0 15px rgba(88, 166, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-download-cyber:hover .btn-glow {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-download-cyber:hover .btn-content i {
+  transform: translateY(2px); /* Petit effet de descente de la flèche au survol */
+}
+
+/* Effet au clic actif */
+.btn-download-cyber:active {
+  transform: translateY(0);
+  box-shadow: 0 0 8px rgba(88, 166, 255, 0.6);
+}
 
 @media(max-width:768px){
   nav{padding:.9rem 1.25rem}
@@ -170,6 +238,7 @@ section:nth-child(even){background:var(--bg2)}
   .about-stats{grid-template-columns:1fr 1fr}
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 
@@ -240,7 +309,8 @@ section:nth-child(even){background:var(--bg2)}
       <div class="hero-tag" data-i18n="hero_tag">// Développeur &amp; Stratège Digital - Madagascar</div>
       <h1 class="hero-name glitch fs_slash" data-text="FERDINAND WENCESLAS">
         FERDINAND
-        <span>WENCESLAS</span>
+        WENESLAS
+        <span>ZAFITSARA</span>
       </h1>
       <p class="hero-sub">
         <em>Front-End</em> · Python · <em data-i18n="hero_auto">Automatisation</em> · UX/UI · <em>Data</em>
@@ -372,7 +442,9 @@ section:nth-child(even){background:var(--bg2)}
     </div>
     <div class="skills-grid">
       <div class="skill-block reveal">
-        <div class="skill-icon">⚡</div>
+        <svg height="24" viewBox="0 0 24 24" width="24" style="fill: currentColor; vertical-align: middle;">
+          <path d="M7 2v11h3v9l7-12h-4l4-8H7z"/>
+        </svg>
         <div class="skill-cat" data-i18n="skill_cat1">Développement Web</div>
         <div class="skill-tags">
           <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">ReactJS</span>
@@ -382,14 +454,18 @@ section:nth-child(even){background:var(--bg2)}
         </div>
       </div>
       <div class="skill-block reveal">
-        <div class="skill-icon">🐍</div>
+        <svg height="24" viewBox="0 0 24 24" width="24" style="fill: currentColor; vertical-align: middle;">
+          <path d="M11.93 2.02c-2.61 0-4.52.23-5.35.63-.84.4-1.46 1.14-1.74 2.14-.38 1.34-.35 2.8-.35 4.18h3.9c0-.23-.01-.48-.01-.73 0-1.29.35-2.22 1.48-2.22H13.1c.96 0 1.63.63 1.63 1.57v2.13h3.53c1.39 0 2.88-.03 4.17.36 1 .3 1.74.92 2.15 1.76.4.83.63 2.7.63 5.3v.44c0-2.62-.23-4.52-.63-5.36-.4-.83-1.14-1.46-2.14-1.74-1.34-.38-2.8-.35-4.18-.35H14.5c0 .23.01.48.01.73 0 1.29-.35 2.22-1.48 2.22H9.78c-.96 0-1.63-.63-1.63-1.57v-2.13H4.62c-1.39 0-2.88.03-4.17-.36-1-.3-1.74-.92-2.15-1.76C.1 13.06 0 11.22 0 8.62v-.44c0 2.61.23 4.52.63 5.35.4.84 1.14 1.46 2.14 1.74 1.34.38 2.8.35 4.18.35h3.9c0-.23-.01-.48-.01-.73 0-1.29.35-2.22 1.48-2.22H16c.96 0 1.63.63 1.63 1.57v2.13h3.53c1.39 0 2.88-.03 4.17.36 1 .3 1.74.92 2.15 1.76.4.83.63 2.7.63 5.3v.44c0-2.61-.23-4.52-.63-5.35-.4-.84-1.14-1.46-2.14-1.74-1.34-.38-2.8-.35-4.18-.35H13.1c0 .23.01.48.01.73 0 1.29-.35 2.22-1.48 2.22H9.78c-.96 0-1.63-.63-1.63-1.57V8.62H4.62c-1.39 0-2.88.03-4.17-.36-1-.3-1.74-.92-2.15-1.76C.1 5.66 0 3.82 0 1.22v-.44c0 2.61.23 4.52.63 5.35.4.84 1.14 1.46 2.14 1.74 1.34.38 2.8.35 4.18.35h3.9c0-.23-.01-.48-.01-.73 0-1.29.35-2.22 1.48-2.22H11.93zM9 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </svg>
         <div class="skill-cat" data-i18n="skill_cat2">Programmation &amp; Automatisation</div>
         <div class="skill-tags">
           <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Openpyxl</span><span class="tag">VBA</span>
         </div>
       </div>
       <div class="skill-block reveal">
-        <div class="skill-icon">🎨</div>
+        <svg height="24" viewBox="0 0 24 24" width="24" style="fill: currentColor; vertical-align: middle;">
+          <path d="M12 3a9 9 0 0 0-9 9c0 4.97 4.03 9 9 9 .73 0 1.39-.44 1.69-1.08.29-.61.14-1.34-.38-1.78-.4-.34-.66-.84-.66-1.39 0-1.01.82-1.83 1.83-1.83H16c2.21 0 4-1.79 4-4 0-4.41-3.59-8-8-8zm-4.5 9c-.83 0-1.5-.67-1.5-1.5S6.67 9 7.5 9s1.5.67 1.5 1.5S8.33 12 7.5 12zm3-3c-.83 0-1.5-.67-1.5-1.5S9.67 6 10.5 6s1.5.67 1.5 1.5S11.33 9 10.5 9zm4 0c-.83 0-1.5-.67-1.5-1.5S13.67 6 14.5 6s1.5.67 1.5 1.5S15.33 9 14.5 9zm3 3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+        </svg>
         <div class="skill-cat" data-i18n="skill_cat3">Design &amp; Outils</div>
         <div class="skill-tags">
           <span class="tag">Figma</span><span class="tag">Adobe Illustrator</span><span class="tag">Photoshop CS6</span>
@@ -397,7 +473,9 @@ section:nth-child(even){background:var(--bg2)}
         </div>
       </div>
       <div class="skill-block reveal">
-        <div class="skill-icon">📊</div>
+        <svg height="24" viewBox="0 0 24 24" width="24" style="fill: currentColor; vertical-align: middle;">
+          <path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/>
+        </svg>
         <div class="skill-cat" data-i18n="skill_cat4">Analyse de Données &amp; Gestion</div>
         <div class="skill-tags">
           <span class="tag">R</span><span class="tag">Tableau</span><span class="tag">Excel (KPI)</span><span class="tag">Lean Manufacturing</span>
@@ -511,14 +589,45 @@ section:nth-child(even){background:var(--bg2)}
       <div class="reveal">
         <h3 style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.15em;color:var(--txt2);margin-bottom:1.5rem" data-i18n="interests_label">CENTRES D'INTÉRÊT</h3>
         <div class="interests-cloud">
-          <span class="interest-pill">♟ <span data-i18n="int1">Échecs</span></span>
-          <span class="interest-pill">🃏 Poker</span>
-          <span class="interest-pill">🎲 Scrabble</span>
-          <span class="interest-pill">🤖 <span data-i18n="int4">Robotique</span></span>
-          <span class="interest-pill">🏕 <span data-i18n="int5">Camping</span></span>
-          <span class="interest-pill">🔭 Sci-Fi</span>
-          <span class="interest-pill">🕵 <span data-i18n="int7">Roman policier</span></span>
-          <span class="interest-pill">🚶 <span data-i18n="int8">Randonnée</span></span>
+          <span class="interest-pill">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor; vertical-align: middle; margin-right: 4px;"><path d="M19 22H5v-2h14v2zm-2.3-4H7.3l.8-3.2C9.5 14.3 11 13 11 11.5V9h2v2.5c0 1.5 1.5 2.8 2.9 3.3l.8 3.2zM12 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z"/></svg>
+              <span data-i18n="int1">Échecs</span>
+          </span>
+
+            <span class="interest-pill">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor; vertical-align: middle; margin-right: 4px;"><path d="M19 2H5c-1.11 0-2 .89-2 2v16c0 1.11.89 2 2 2h14c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2zm-7 15c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-8c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+              <span data-i18n="int2">Poker</span>
+            </span>
+
+            <span class="interest-pill">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor; vertical-align: middle; margin-right: 4px;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 4h-4V5h4v2zm-6-2v2H8V5h4zM5 5h1v2H5V5zm0 14v-4h2v4H5zm4 0v-2h2v2H9zm4 0v-1h2v1h-2zm5 0h-1v-3h1v3z"/></svg>
+              <span data-i18n="int3">Scrabble</span>
+            </span>
+
+            <span class="interest-pill">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor; vertical-align: middle; margin-right: 4px;"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+              <span data-i18n="int4">Robotique</span>
+            </span>
+
+            <span class="interest-pill">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor; vertical-align: middle; margin-right: 4px;"><path d="M2 17h20v2H2zm11.23-3.23l2.84-2.84a1 1 0 0 0 0-1.42l-7.37-7.37a1 1 0 0 0-1.42 0L3.44 6.28a1 1 0 0 0 0 1.42l7.37 7.37a1 1 0 0 0 1.42 0zM12 5.5l3 3-1.5 1.5-3-3L12 5.5z"/></svg>
+              <span data-i18n="int5">Camping</span>
+            </span>
+
+            <span class="interest-pill">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor; vertical-align: middle; margin-right: 4px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L11 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              <span data-i18n="int6">Sci-Fi</span>
+            </span>
+
+            <span class="interest-pill">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor; vertical-align: middle; margin-right: 4px;"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <span data-i18n="int7">Roman policier</span>
+            </span>
+
+            <span class="interest-pill">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor; vertical-align: middle; margin-right: 4px;"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l2.4-10.3 2.1 2V23h2v-7.5l-2.1-2 .6-3c1 .8 2.4 1.5 4.4 1.5v-2c-1.9 0-3.1-.7-3.9-1.7l-.9-1.6C11.3 5.7 10.3 5 9 5c-.6 0-1.2.2-1.7.6L3 8.9V13h2V9l1.8-1.3z"/></svg>
+              <span data-i18n="int8">Randonnée</span>
+            </span>
         </div>
         <p style="margin-top:1.5rem;font-family:var(--ff-mono);font-size:.7rem;color:var(--txt2)">
           <span data-i18n="clubs_label">Membre</span> - <span style="color:var(--cyan)">King of Mada Chess Club</span> (2023) &amp; <span style="color:var(--cyan)">Robotika Club Madagascar</span> (2022)
@@ -535,10 +644,43 @@ section:nth-child(even){background:var(--bg2)}
       <div class="contact-big" data-i18n="contact_big">Travaillons ensemble.</div>
       <p class="contact-sub" data-i18n="contact_sub">Disponible pour des missions freelance, collaborations ou opportunités long terme.</p>
       <div class="contact-links">
-        <a href="mailto:wzafitsara@gmail.com" class="contact-link"><span class="ico">✉</span> wzafitsara@gmail.com</a>
-        <a href="tel:+261349370115" class="contact-link"><span class="ico">📱</span> +261 34 93 701 15</a>
-        <a href="https://github.com/silash2" class="contact-link" target="_blank"><span class="ico">⌥</span> GitHub</a>
+        <a href="mailto:wzafitsara@gmail.com" class="contact-link">
+            <span class="ico" style="display: inline-flex; align-items: center; vertical-align: middle; margin-right: 5px;">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor;">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </span> 
+            wzafitsara@gmail.com
+        </a>
+
+          <a href="tel:+261349370115" class="contact-link">
+            <span class="ico" style="display: inline-flex; align-items: center; vertical-align: middle; margin-right: 5px;">
+              <svg height="14" viewBox="0 0 24 24" width="14" style="fill: currentColor;">
+                <path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm-5 21c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5-4H7V4h10v14z"/>
+              </svg>
+            </span> 
+            +261 34 93 701 15
+          </a>
+        <a href="https://github.com/silash2" class="contact-link" target="_blank">
+            <span class="ico" style="display: inline-flex; align-items: center; vertical-align: middle;">
+              <svg height="16" viewBox="0 0 16 16" width="16" style="fill: currentColor;">
+                <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82A7.48 7.48 0 0 0 8 3c-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+              </svg>
+            </span>
+            GitHub
+        </a>
+
       </div>
+      <div>
+       <!-- Bouton unique de téléchargement -->
+        <button onclick="generatePDF()" class="btn-download-cyber" id="download-cv-btn">
+          <div class="btn-glow"></div>
+          <span class="btn-content" data-i18n="btn_download">
+            <i class="fa-solid fa-file-arrow-down"></i> Télécharger en PDF
+          </span>
+        </button>
+      </div> 
+      <br>
       <span style="font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.1em;color:var(--txt2)">
         © 2025 Ferdinand Wenceslas Zafitsara - Antananarivo, Madagascar
       </span>
@@ -547,6 +689,7 @@ section:nth-child(even){background:var(--bg2)}
 </section>
 
 <script>
+
 /* ── TRANSLATIONS ─────────────────────────────────────────── */
 const T = {
   fr: {
@@ -610,6 +753,7 @@ const T = {
     clubs_label:'Membre',
     contact_big:'Travaillons ensemble.',
     contact_sub:'Disponible pour des missions freelance, collaborations ou opportunités long terme.',
+    "btn_download": '<i class="fa-solid fa-file-arrow-down"></i> Télécharger en PDF',
   },
   en: {
     nav_about:'About', nav_exp:'Experience', nav_skills:'Skills', nav_projects:'Projects', nav_edu:'Education', nav_contact:'Contact',
@@ -672,6 +816,7 @@ const T = {
     clubs_label:'Member',
     contact_big:'Let\'s work together.',
     contact_sub:'Available for freelance missions, collaborations, or long-term opportunities.',
+    "btn_download": '<i class="fa-solid fa-file-arrow-down"></i> Download as PDF',
   },
   de: {
     nav_about:'Über mich', nav_exp:'Erfahrung', nav_skills:'Fähigkeiten', nav_projects:'Projekte', nav_edu:'Ausbildung', nav_contact:'Kontakt',
@@ -734,6 +879,7 @@ const T = {
     clubs_label:'Mitglied',
     contact_big:'Lassen Sie uns zusammenarbeiten.',
     contact_sub:'Verfügbar für Freelance-Aufträge, Kooperationen oder langfristige Möglichkeiten.',
+    "btn_download": '<i class="fa-solid fa-file-arrow-down"></i> Als PDF herunterladen',
   }
 };
 
@@ -806,6 +952,89 @@ const statObs=new IntersectionObserver(entries=>{
   });
 },{threshold:.3});
 document.querySelectorAll('.about-stats').forEach(el=>statObs.observe(el));
+
+function generatePDF() {
+  // 1. Détecter la langue actuellement active sur ton site
+  // On regarde quel bouton de langue a la classe 'active'
+  let currentLang = 'fr';
+  if (document.getElementById('btn-en')?.classList.contains('active')) currentLang = 'en';
+  if (document.getElementById('btn-de')?.classList.contains('active')) currentLang = 'de';
+
+  // 2. Récupérer les textes traduits directement depuis ton affichage HTML actuel
+  const tagline = document.querySelector('.hero-tag')?.innerText || '';
+  const subKeywords = document.querySelector('.hero-sub')?.innerHTML || '';
+  const aboutP1 = document.querySelector('[data-i18n="about_p1"]')?.innerHTML || '';
+  const aboutP2 = document.querySelector('[data-i18n="about_p2"]')?.innerHTML || '';
+  
+  // Récupération des blocs d'expérience et compétences (on prend le HTML épuré)
+  const experienceHtml = document.querySelector('.timeline')?.innerHTML || '';
+  const skillsHtml = document.querySelector('.skills-grid')?.innerHTML || '';
+  const projectsHtml = document.querySelector('.projects-grid')?.innerHTML || '';
+
+  // 3. Construire un template HTML épuré spécialement conçu pour le format A4 PDF
+  // Cela évite les bugs avec le CSS global de ton site
+  const pdfTemplate = `
+    <div style="font-family: Arial, sans-serif; color: #c9d1d9; background-color: #0d1117; padding: 20px; font-size: 12px;">
+      <table style="width: 100%; border-bottom: 2px solid #30363d; padding-bottom: 15px; margin-bottom: 20px;">
+        <tr>
+          <td style="width: 80px; vertical-align: middle;">
+            <!-- Ton image locale est lue directement ici -->
+            <img src="./assets/images/ferdinand.jpg" style="width: 70px; height: 70px; border-radius: 4px; object-fit: cover;" />
+          </td>
+          <td style="padding-left: 15px; vertical-align: middle;">
+            <div style="color: #58a6ff; font-family: monospace; font-size: 11px; font-weight: bold;">${tagline}</div>
+            <h1 style="color: #f0f6fc; font-size: 24px; margin: 5px 0 2px 0;">FERDINAND WENCESLAS</h1>
+            <div style="color: #8b949e; font-size: 12px;">${subKeywords}</div>
+          </td>
+          <td style="text-align: right; font-family: monospace; font-size: 11px; color: #8b949e; vertical-align: middle;">
+            wzafitsara@gmail.com ✉<br>
+            +261 34 93 701 15 📱<br>
+            github.com/silash2 ⌥
+          </td>
+        </tr>
+      </table>
+
+      <table style="width: 100%; table-layout: fixed;">
+        <tr>
+          <!-- Colonne Gauche -->
+          <td style="width: 60%; padding-right: 15px; border-right: 1px solid #21262d; vertical-align: top;">
+            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #21262d; padding-bottom: 3px;">À propos</h3>
+            <p style="color: #8b949e; text-align: justify; line-height: 1.5;">${aboutP1}</p>
+            <p style="color: #8b949e; text-align: justify; line-height: 1.5;">${aboutP2}</p>
+            
+            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #21262d; padding-bottom: 3px; margin-top: 20px;">Expériences</h3>
+            <div class="pdf-timeline">${experienceHtml}</div>
+          </td>
+          
+          <!-- Colonne Droite -->
+          <td style="width: 40%; padding-left: 15px; vertical-align: top;">
+            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #21262d; padding-bottom: 3px;">Compétences</h3>
+            <div class="pdf-skills">${skillsHtml}</div>
+
+            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #21262d; padding-bottom: 3px; margin-top: 20px;">Projets Clés</h3>
+            <div class="pdf-projects">${projectsHtml}</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  `;
+
+  // 4. Options html2pdf optimisées pour éviter le blocage
+  const options = {
+    margin:       10,
+    filename:     `CV_Ferdinand_Zafitsara_${currentLang.toUpperCase()}.pdf`,
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { 
+      scale: 2, 
+      useCORS: true, // Autorise le script à charger la photo locale sans crash de sécurité
+      logging: false 
+    },
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  // 5. Exécuter la génération sur le template virtuel créé à la volée
+  html2pdf().set(options).from(pdfTemplate).save();
+}
 </script>
 </body>
 </html>
