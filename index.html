@@ -970,9 +970,9 @@ function generatePDF() {
   const skillsHtml = document.querySelector('.skills-grid')?.innerHTML || '';
   const projectsHtml = document.querySelector('.projects-grid')?.innerHTML || '';
 
-  // 3. Template HTML Premium (Largeur stricte de 794px pour le format A4)
+  // 3. Template HTML calibré sur le ratio A4 strict (794px de large)
   const pdfTemplate = `
-    <div id="pdf-real-render" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #c9d1d9; background-color: #0d1117; padding: 45px; font-size: 11px; line-height: 1.6; box-sizing: border-box; width: 794px; text-align: left;">
+    <div id="pdf-real-render" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #c9d1d9; background-color: #0d1117; padding: 45px; font-size: 11px; line-height: 1.55; box-sizing: border-box; width: 794px; text-align: left;">
       
       <style>
         #pdf-real-render, #pdf-real-render * {
@@ -984,7 +984,7 @@ function generatePDF() {
           box-sizing: border-box !important;
         }
 
-        /* Protection anti-coupure des blocs lors des sauts de page */
+        /* Sécurité anti-coupure lors des sauts de page */
         .tl-item, .skill-block, .proj-card, tr {
           page-break-inside: avoid !important;
           break-inside: avoid !important;
@@ -994,11 +994,11 @@ function generatePDF() {
           color: #f0f6fc; 
           text-transform: uppercase; 
           border-bottom: 1px solid #30363d; 
-          padding-bottom: 6px; 
+          padding-bottom: 5px; 
           margin-top: 0; 
-          margin-bottom: 18px;
+          margin-bottom: 15px;
           font-size: 11px; 
-          letter-spacing: 1.2px;
+          letter-spacing: 1px;
           font-weight: 700;
         }
 
@@ -1012,44 +1012,42 @@ function generatePDF() {
         .tl-bullets { margin: 5px 0 0 12px; padding: 0; color: #8b949e; list-style-type: disc; }
         .tl-bullets li { margin-bottom: 3px; text-align: left; }
 
-        /* Alignement Pro des Compétences (Anti-asphyxie) */
-        .skill-block { margin-bottom: 18px; display: block; width: 100%; }
+        /* Compétences & Alignement des Tags */
+        .skill-block { margin-bottom: 16px; display: block; width: 100%; }
         .skill-cat { color: #f0f6fc; font-weight: 700; margin-bottom: 8px; font-size: 11px; display: block; }
-        .skill-icon, .skill-block svg { display: inline-block; fill: #58a6ff !important; color: #58a6ff !important; width: 13px; height: 13px; margin-right: 6px; vertical-align: middle; }
+        .skill-icon, .skill-block svg { display: inline-block; fill: #58a6ff !important; color: #58a6ff !important; width: 13px; height: 13px; margin-right: 5px; vertical-align: middle; }
         .skill-tags { display: block; width: 100%; }
-        
-        /* Tags responsives sans dégradation graphique */
         .tag { 
           display: inline-block !important; 
           background: #21262d !important; 
           color: #c9d1d9 !important; 
-          padding: 3px 8px !important; 
-          margin-right: 5px !important;
-          margin-bottom: 6px !important;
+          padding: 2px 7px !important; 
+          margin-right: 4px !important;
+          margin-bottom: 5px !important;
           border-radius: 4px !important; 
           border: 1px solid #30363d !important; 
-          font-size: 9.5px !important; 
+          font-size: 9px !important; 
           font-family: monospace !important; 
           white-space: nowrap !important;
         }
 
-        /* Cartes des Projets */
+        /* Projets Clés */
         .proj-card { background: #161b22; border: 1px solid #30363d; padding: 12px; border-radius: 6px; margin-bottom: 12px; display: block; width: 100%; }
         .proj-num { font-size: 9px; color: #58a6ff; font-family: monospace; font-weight: 700; }
-        .proj-title { font-size: 11px; font-weight: 700; margin: 2px 0 5px 0; }
+        .proj-title { font-size: 11px; font-weight: 700; margin: 2px 0 4px 0; }
         .proj-title a { color: #f0f6fc !important; text-decoration: none; }
-        .proj-desc { color: #8b949e; font-size: 10px; line-height: 1.5; text-align: left; }
+        .proj-desc { color: #8b949e; font-size: 9.5px; line-height: 1.45; text-align: left; }
       </style>
 
-      <!-- En-tête Rééquilibré -->
+      <!-- En-tête -->
       <table style="width: 100%; border-bottom: 1px solid #30363d; padding-bottom: 20px; margin-bottom: 25px; border-collapse: collapse;">
         <tr>
-          <td style="vertical-align: top; text-align: left;">
-            <div style="color: #58a6ff; font-family: monospace; font-weight: 700; font-size: 11px; letter-spacing: 0.5px;">${tagline}</div>
+          <td style="vertical-align: top;">
+            <div style="color: #58a6ff; font-family: monospace; font-weight: 700; font-size: 10.5px; letter-spacing: 0.5px;">${tagline}</div>
             <h1 style="color: #f0f6fc; font-size: 24px; margin: 4px 0 2px 0; font-weight: 800; letter-spacing: -0.5px;">FERDINAND WENCESLAS</h1>
             <div style="color: #8b949e; font-size: 11.5px; font-weight: 500;">${subKeywords}</div>
           </td>
-          <td style="text-align: right; color: #8b949e; font-family: monospace; font-size: 10.5px; line-height: 1.7; vertical-align: top; width: 240px; padding-right: 2px;">
+          <td style="text-align: right; color: #8b949e; font-family: monospace; font-size: 10px; line-height: 1.6; vertical-align: top; width: 220px;">
             <span style="color: #f0f6fc;">wzafitsara@gmail.com</span> ✉<br>
             <span style="color: #f0f6fc;">+261 34 93 701 15</span> 📱<br>
             <span style="color: #58a6ff;">github.com/silash2</span> ⌥
@@ -1057,14 +1055,14 @@ function generatePDF() {
         </tr>
       </table>
 
-      <!-- Grille 2 Colonnes Harmonieuse (370px Gauche | 330px Droite) -->
+      <!-- Grille 2 Colonnes Millimétrée (Total : 704px d'espace utile) -->
       <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
         <tr>
-          <!-- Colonne Gauche : Plus d'espace étouffant, calibré à 370px -->
-          <td style="width: 370px; padding-right: 25px; border-right: 1px solid #21262d; vertical-align: top;">
+          <!-- Gauche (400px de large avec marge à droite) -->
+          <td style="width: 400px; padding-right: 25px; border-right: 1px solid #21262d; vertical-align: top;">
             <div style="margin-bottom: 25px;">
               <h3 class="pdf-section-title">À propos</h3>
-              <div style="color: #8b949e; text-align: left; font-size: 10.5px; line-height: 1.6;">
+              <div style="color: #8b949e; text-align: left; font-size: 10.5px; line-height: 1.55;">
                 <p style="margin: 0 0 8px 0;">${aboutP1}</p>
                 <p style="margin: 0;">${aboutP2}</p>
               </div>
@@ -1076,8 +1074,8 @@ function generatePDF() {
             </div>
           </td>
           
-          <!-- Colonne Droite : Respire enfin avec 330px de largeur utile -->
-          <td style="width: 330px; padding-left: 25px; vertical-align: top;">
+          <!-- Droite (304px de large avec marge à gauche) -->
+          <td style="width: 304px; padding-left: 25px; vertical-align: top;">
             <div style="margin-bottom: 25px;">
               <h3 class="pdf-section-title">Compétences</h3>
               <div class="pdf-skills">${skillsHtml}</div>
@@ -1093,7 +1091,7 @@ function generatePDF() {
     </div>
   `;
 
-  // 4. Conteneur de rendu isolé
+  // 4. Affichage temporaire au premier plan pour la capture
   const tempContainer = document.createElement('div');
   tempContainer.style.position = 'fixed';
   tempContainer.style.top = '0';
@@ -1106,9 +1104,9 @@ function generatePDF() {
   tempContainer.innerHTML = `<div style="width: 794px; margin: 0 auto;">${pdfTemplate}</div>`;
   document.body.appendChild(tempContainer);
 
-  // 5. Configuration Configurée pour empêcher le rognage à droite
+  // 5. Configuration A4 Strict sans interférence de marges jsPDF
   const options = {
-    margin:       0, 
+    margin:       0, // <--- SOLUTION DU PROBLÈME : Aucune marge jsPDF parasite
     filename:     `CV_Ferdinand_Zafitsara_${currentLang.toUpperCase()}.pdf`,
     image:        { type: 'jpeg', quality: 0.98 },
     html2canvas:  { 
@@ -1116,14 +1114,13 @@ function generatePDF() {
       useCORS: true,
       backgroundColor: '#0d1117',
       scrollY: 0,
-      scrollX: 0,
-      windowWidth: 850 // <--- LE GRAAL : Force l'affichage en mode écran large pour stopper le rognage !
+      scrollX: 0
     },
     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
     pagebreak:    { mode: ['css', 'legacy'] }
   };
 
-  // 6. Prise de vue et nettoyage
+  // 6. Rendu et nettoyage
   setTimeout(() => {
     html2pdf().set(options).from(document.getElementById('pdf-real-render')).save().then(() => {
       document.body.removeChild(tempContainer);
