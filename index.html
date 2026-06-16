@@ -951,13 +951,16 @@ const statObs=new IntersectionObserver(entries=>{
     }
   });
 },{threshold:.3});
+
+document.querySelectorAll('.about-stats').forEach(el=>statObs.observe(el));
+
 function generatePDF() {
-  // 1. Détecter la langue actuellement active
+  // 1. Détecter la langue active
   let currentLang = 'fr';
   if (document.getElementById('btn-en')?.classList.contains('active')) currentLang = 'en';
   if (document.getElementById('btn-de')?.classList.contains('active')) currentLang = 'de';
 
-  // 2. Récupérer les textes du DOM
+  // 2. Récupérer les blocs de données du site
   const tagline = document.querySelector('.hero-tag')?.innerText || '';
   const subKeywords = document.querySelector('.hero-sub')?.innerText || '';
   const aboutP1 = document.querySelector('[data-i18n="about_p1"]')?.innerHTML || '';
@@ -967,136 +970,101 @@ function generatePDF() {
   const skillsHtml = document.querySelector('.skills-grid')?.innerHTML || '';
   const projectsHtml = document.querySelector('.projects-grid')?.innerHTML || '';
 
-  // 3. Template HTML avec CSS de secours et gestion d'erreur d'image inline
+  // 3. Générer le squelette HTML du PDF
   const pdfTemplate = `
-    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #c9d1d9; background-color: #0d1117; padding: 30px; font-size: 11px; width: 750px; box-sizing: border-box; line-height: 1.5; display: block !important;">
+    <div id="pdf-real-render" style="font-family: Arial, sans-serif; color: #c9d1d9; background-color: #0d1117; padding: 40px; font-size: 11px; line-height: 1.5; box-sizing: border-box; width: 750px; text-align: left;">
       
       <style>
-        /* Forcer l'affichage de TOUT le contenu injecté pour html2canvas */
-        .pdf-container, .pdf-container *, .pdf-timeline *, .pdf-skills *, .pdf-projects * {
+        /* Force la visibilité absolue de tous les enfants pour contrer les scripts d'animation du site */
+        #pdf-real-render, #pdf-real-render * {
           visibility: visible !important;
           opacity: 1 !important;
           transform: none !important;
           animation: none !important;
           transition: none !important;
         }
-
-        /* Ajustements de la Timeline (Expériences) */
-        .pdf-timeline .tl-item { position: relative; padding-left: 20px; margin-bottom: 15px; display: block !important; }
-        .pdf-timeline .tl-dot { position: absolute; left: 0; top: 4px; width: 6px; height: 6px; background-color: #58a6ff !important; border-radius: 50%; }
-        .pdf-timeline .tl-category { font-family: monospace; font-size: 9px; color: #58a6ff !important; font-weight: bold; margin-bottom: 2px; }
-        .pdf-timeline .tl-title { color: #f0f6fc !important; font-size: 11px; font-weight: bold; }
-        .pdf-timeline .tl-company a { color: #58a6ff !important; text-decoration: none; }
-        .pdf-timeline .tl-period { font-size: 10px; color: #8b949e !important; margin: 2px 0; font-style: italic; }
-        .pdf-timeline .tl-bullets { margin: 5px 0 0 12px; padding: 0; color: #8b949e !important; display: block !important; }
-        .pdf-timeline .tl-bullets li { margin-bottom: 3px; display: list-item !important; }
-
-        /* Ajustements des Compétences */
-        .pdf-skills { display: block !important; }
-        .pdf-skills .skill-block { margin-bottom: 15px; display: block !important; }
-        .pdf-skills svg { fill: #58a6ff !important; margin-right: 6px; float: left; width: 16px; height: 16px; display: inline-block !important; }
-        .pdf-skills .skill-icon { float: left; margin-right: 6px; font-size: 14px; line-height: 16px; display: inline-block !important; }
-        .pdf-skills .skill-cat { color: #f0f6fc !important; font-weight: bold; margin-bottom: 6px; font-size: 11px; padding-top: 1px; }
-        .pdf-skills .skill-tags { display: block !important; clear: both; padding-top: 5px; }
-        .pdf-skills .tag { display: inline-block !important; background: #21262d !important; color: #c9d1d9 !important; padding: 2px 6px !important; margin: 2px 3px 2px 0 !important; border-radius: 3px !important; font-size: 9.5px !important; border: 1px solid #30363d !important; }
-
-        /* Ajustements des Projets Clés */
-        .pdf-projects .proj-card { background: #161b22 !important; border: 1px solid #30363d !important; padding: 10px; border-radius: 6px; margin-bottom: 10px; display: block !important; }
-        .pdf-projects .proj-num { font-family: monospace; font-size: 9px; color: #58a6ff !important; margin-bottom: 2px; }
-        .pdf-projects .proj-title { font-size: 11px; font-weight: bold; margin-bottom: 4px; }
-        .pdf-projects .proj-title a { color: #f0f6fc !important; text-decoration: none; }
-        .pdf-projects .proj-desc { color: #8b949e !important; font-size: 10px; line-height: 1.4; }
+        .tl-item { position: relative; padding-left: 15px; margin-bottom: 12px; display: block; }
+        .tl-dot { position: absolute; left: 0; top: 4px; width: 6px; height: 6px; background: #58a6ff; border-radius: 50%; }
+        .tl-category { font-size: 9px; color: #58a6ff; font-weight: bold; }
+        .tl-title { color: #f0f6fc; font-weight: bold; }
+        .tl-period { font-size: 10px; color: #8b949e; font-style: italic; }
+        .tl-bullets { margin: 5px 0 0 10px; padding: 0; color: #8b949e; }
+        .tag { display: inline-block; background: #21262d; padding: 2px 6px; margin: 2px; border-radius: 3px; border: 1px solid #30363d; }
+        .proj-card { background: #161b22; border: 1px solid #30363d; padding: 10px; border-radius: 6px; margin-bottom: 10px; }
       </style>
 
-      <!-- En-tête -->
       <table style="width: 100%; border-bottom: 2px solid #30363d; padding-bottom: 15px; margin-bottom: 20px;">
         <tr>
-          <td style="width: 80px; vertical-align: middle;">
-            <!-- Si l'image locale bloque la sécurité du navigateur, on la masque pour sauver le PDF -->
-            <img src="./assets/images/ferdinand.jpg" onerror="this.style.display='none';" style="width: 75px; height: 75px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d;" />
+          <td>
+            <div style="color: #58a6ff; font-family: monospace; font-weight: bold;">${tagline}</div>
+            <h1 style="color: #f0f6fc; font-size: 22px; margin: 5px 0; font-weight: 800;">FERDINAND WENCESLAS</h1>
+            <div style="color: #8b949e;">${subKeywords}</div>
           </td>
-          <td style="padding-left: 15px; vertical-align: middle;">
-            <div style="color: #58a6ff; font-family: monospace; font-size: 11px; font-weight: bold;">${tagline}</div>
-            <h1 style="color: #f0f6fc; font-size: 24px; margin: 5px 0 2px 0; letter-spacing: 1px; font-weight: 800;">FERDINAND WENCESLAS</h1>
-            <div style="color: #8b949e; font-size: 11px; font-weight: 500;">${subKeywords}</div>
-          </td>
-          <td style="text-align: right; font-family: monospace; font-size: 10px; color: #8b949e; vertical-align: middle; line-height: 1.6;">
+          <td style="text-align: right; color: #8b949e; font-family: monospace; font-size: 10px; line-height: 1.6; vertical-align: middle;">
             wzafitsara@gmail.com ✉<br>
-            +261 34 93 701 15 📱<br>
-            github.com/silash2 ⌥
+            +261 34 93 701 15 📱
           </td>
         </tr>
       </table>
 
-      <!-- Corps du CV -->
-      <table style="width: 100%; table-layout: fixed; border-collapse: collapse;" class="pdf-container">
+      <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
         <tr>
-          <!-- Colonne Gauche (55%) -->
           <td style="width: 55%; padding-right: 20px; border-right: 1px solid #21262d; vertical-align: top;">
-            <div style="margin-bottom: 20px;">
-              <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 0; font-size: 12px; letter-spacing: 0.5px;">À propos</h3>
-              <div style="color: #8b949e; text-align: justify; font-size: 10.5px; line-height: 1.5;">
-                <p style="margin: 0 0 8px 0;">${aboutP1}</p>
-                <p style="margin: 0;">${aboutP2}</p>
-              </div>
-            </div>
-            
-            <div>
-              <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 25px; font-size: 12px; letter-spacing: 0.5px;">Expériences</h3>
-              <div class="pdf-timeline">${experienceHtml}</div>
-            </div>
+            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 0;">À propos</h3>
+            <p style="text-align: justify;">${aboutP1}</p>
+            <p style="text-align: justify;">${aboutP2}</p>
+            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 20px;">Expériences</h3>
+            <div>${experienceHtml}</div>
           </td>
-          
-          <!-- Colonne Droite (45%) -->
           <td style="width: 45%; padding-left: 20px; vertical-align: top;">
-            <div style="margin-bottom: 25px;">
-              <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 0; font-size: 12px; letter-spacing: 0.5px;">Compétences</h3>
-              <div class="pdf-skills">${skillsHtml}</div>
-            </div>
-
-            <div>
-              <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 20px; font-size: 12px; letter-spacing: 0.5px;">Projets Clés</h3>
-              <div class="pdf-projects">${projectsHtml}</div>
-            </div>
+            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 0;">Compétences</h3>
+            <div>${skillsHtml}</div>
+            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 20px;">Projets</h3>
+            <div>${projectsHtml}</div>
           </td>
         </tr>
       </table>
     </div>
   `;
 
-  // 4. Créer le conteneur temporaire visible au pixel près mais en arrière-plan
+  // 4. Injection PHYSIQUE ET VISIBLE au premier plan pour forcer le rendu du navigateur
   const tempContainer = document.createElement('div');
-  tempContainer.style.position = 'absolute';
+  tempContainer.style.position = 'fixed';
   tempContainer.style.top = '0';
-  tempContainer.style.left = '-9999px'; // Décalé sur le côté pour ne pas casser le rendu géométrique
-  tempContainer.innerHTML = pdfTemplate;
+  tempContainer.style.left = '0';
+  tempContainer.style.width = '100vw';
+  tempContainer.style.height = '100vh';
+  tempContainer.style.backgroundColor = '#0d1117'; // Cache temporairement le site dessous
+  tempContainer.style.zIndex = '999999';
+  tempContainer.style.overflow = 'auto';
+  tempContainer.innerHTML = `<div style="width: 750px; margin: 0 auto;">${pdfTemplate}</div>`;
   document.body.appendChild(tempContainer);
 
-  // 5. Configuration simplifiée au maximum (Ultra-stable)
+  // 5. Options d'impression standardisées
   const options = {
     margin:       10,
     filename:     `CV_Ferdinand_Zafitsara_${currentLang.toUpperCase()}.pdf`,
-    image:        { type: 'jpeg', quality: 0.95 },
+    image:        { type: 'jpeg', quality: 0.98 },
     html2canvas:  { 
-      scale: 1.5, // Baissé légèrement pour éviter les saturations mémoires du Canvas
-      useCORS: false, 
-      allowTaint: true,
-      logging: false
+      scale: 2, 
+      useCORS: true,
+      backgroundColor: '#0d1117',
+      scrollY: 0,
+      scrollX: 0
     },
     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
-  // 6. Laisser 100ms au DOM pour s'installer puis générer
+  // 6. Laisser 50ms au moteur pour afficher le bloc, capturer, puis détruire l'élément
   setTimeout(() => {
-    html2pdf().set(options).from(tempContainer).save().then(() => {
+    html2pdf().set(options).from(document.getElementById('pdf-real-render')).save().then(() => {
       document.body.removeChild(tempContainer);
     }).catch((error) => {
-      console.error("Erreur de génération :", error);
+      console.error("Erreur d'exportation :", error);
       document.body.removeChild(tempContainer);
     });
-  }, 100);
+  }, 50);
 }
-document.querySelectorAll('.about-stats').forEach(el=>statObs.observe(el));
 </script>
 </body>
 </html>
