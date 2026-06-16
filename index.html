@@ -970,12 +970,12 @@ function generatePDF() {
   const skillsHtml = document.querySelector('.skills-grid')?.innerHTML || '';
   const projectsHtml = document.querySelector('.projects-grid')?.innerHTML || '';
 
-  // 3. Générer le squelette HTML du PDF
+  // 3. Générer le squelette HTML optimisé pour le format A4
   const pdfTemplate = `
-    <div id="pdf-real-render" style="font-family: Arial, sans-serif; color: #c9d1d9; background-color: #0d1117; padding: 40px; font-size: 11px; line-height: 1.5; box-sizing: border-box; width: 750px; text-align: left;">
+    <div id="pdf-real-render" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #c9d1d9; background-color: #0d1117; padding: 45px 40px; font-size: 11px; line-height: 1.6; box-sizing: border-box; width: 800px; text-align: left;">
       
       <style>
-        /* Force la visibilité absolue de tous les enfants pour contrer les scripts d'animation du site */
+        /* Force la visibilité absolue et nettoie les animations web */
         #pdf-real-render, #pdf-real-render * {
           visibility: visible !important;
           opacity: 1 !important;
@@ -983,79 +983,129 @@ function generatePDF() {
           animation: none !important;
           transition: none !important;
         }
-        .tl-item { position: relative; padding-left: 15px; margin-bottom: 12px; display: block; }
-        .tl-dot { position: absolute; left: 0; top: 4px; width: 6px; height: 6px; background: #58a6ff; border-radius: 50%; }
-        .tl-category { font-size: 9px; color: #58a6ff; font-weight: bold; }
-        .tl-title { color: #f0f6fc; font-weight: bold; }
-        .tl-period { font-size: 10px; color: #8b949e; font-style: italic; }
-        .tl-bullets { margin: 5px 0 0 10px; padding: 0; color: #8b949e; }
-        .tag { display: inline-block; background: #21262d; padding: 2px 6px; margin: 2px; border-radius: 3px; border: 1px solid #30363d; }
-        .proj-card { background: #161b22; border: 1px solid #30363d; padding: 10px; border-radius: 6px; margin-bottom: 10px; }
+
+        /* ANTI-DEBORDEMENT CRUCIAL : Interdit de couper un bloc en deux lors d'un saut de page */
+        .tl-item, .skill-block, .proj-card, tr {
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        /* Titres de sections professionnels */
+        .pdf-section-title {
+          color: #f0f6fc; 
+          text-transform: uppercase; 
+          border-bottom: 1px solid #30363d; 
+          padding-bottom: 6px; 
+          margin-top: 0; 
+          margin-bottom: 15px;
+          font-size: 12px; 
+          letter-spacing: 1px;
+          font-weight: 700;
+        }
+
+        /* Ajustements de la Chronologie */
+        .tl-item { position: relative; padding-left: 18px; margin-bottom: 16px; display: block; }
+        .tl-dot { position: absolute; left: 0; top: 5px; width: 6px; height: 6px; background: #58a6ff; border-radius: 50%; }
+        .tl-category { font-size: 9px; color: #58a6ff; font-weight: bold; font-family: monospace; text-transform: uppercase; }
+        .tl-title { color: #f0f6fc; font-weight: bold; font-size: 11.5px; margin: 2px 0; }
+        .tl-company a { color: #58a6ff !important; text-decoration: none; font-weight: 500; }
+        .tl-period { font-size: 10px; color: #8b949e; font-style: italic; margin-bottom: 4px; }
+        .tl-bullets { margin: 4px 0 0 12px; padding: 0; color: #8b949e; list-style-type: disc; }
+        .tl-bullets li { margin-bottom: 3px; }
+
+        /* Ajustements des Compétences & Badges */
+        .skill-block { margin-bottom: 18px; display: block; }
+        .skill-cat { color: #f0f6fc; font-weight: bold; margin-bottom: 8px; font-size: 11px; display: flex; align-items: center; }
+        .skill-icon, .skill-block svg { display: inline-block; fill: #58a6ff !important; color: #58a6ff !important; width: 14px; height: 14px; margin-right: 6px; vertical-align: middle; }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 2px; }
+        .tag { display: inline-block; background: #21262d; color: #c9d1d9; padding: 3px 8px; border-radius: 4px; border: 1px solid #30363d; font-size: 9.5px; font-family: monospace; white-space: nowrap; }
+
+        /* Ajustements des Projets */
+        .proj-card { background: #161b22; border: 1px solid #30363d; padding: 12px; border-radius: 6px; margin-bottom: 12px; display: block; }
+        .proj-num { font-size: 9px; color: #58a6ff; font-family: monospace; font-weight: bold; }
+        .proj-title { font-size: 11px; font-weight: bold; margin: 2px 0 4px 0; }
+        .proj-title a { color: #f0f6fc !important; text-decoration: none; }
+        .proj-desc { color: #8b949e; font-size: 10px; line-height: 1.45; text-align: justify; }
       </style>
 
-      <table style="width: 100%; border-bottom: 2px solid #30363d; padding-bottom: 15px; margin-bottom: 20px;">
+      <table style="width: 100%; border-bottom: 2px solid #30363d; padding-bottom: 18px; margin-bottom: 22px; border-collapse: collapse;">
         <tr>
-          <td>
-            <div style="color: #58a6ff; font-family: monospace; font-weight: bold;">${tagline}</div>
-            <h1 style="color: #f0f6fc; font-size: 22px; margin: 5px 0; font-weight: 800;">FERDINAND WENCESLAS</h1>
-            <div style="color: #8b949e;">${subKeywords}</div>
+          <td style="vertical-align: top;">
+            <div style="color: #58a6ff; font-family: monospace; font-weight: bold; font-size: 11px; letter-spacing: 0.5px;">${tagline}</div>
+            <h1 style="color: #f0f6fc; font-size: 24px; margin: 4px 0 2px 0; font-weight: 800; letter-spacing: -0.5px;">FERDINAND WENCESLAS</h1>
+            <div style="color: #8b949e; font-size: 11.5px; font-weight: 500;">${subKeywords}</div>
           </td>
-          <td style="text-align: right; color: #8b949e; font-family: monospace; font-size: 10px; line-height: 1.6; vertical-align: middle;">
-            wzafitsara@gmail.com ✉<br>
-            +261 34 93 701 15 📱
+          <td style="text-align: right; color: #8b949e; font-family: monospace; font-size: 10px; line-height: 1.6; vertical-align: top; width: 220px;">
+            <span style="color: #f0f6fc;">wzafitsara@gmail.com</span> ✉<br>
+            <span style="color: #f0f6fc;">+261 34 93 701 15</span> 📱<br>
+            <span style="color: #58a6ff;">github.com/silash2</span> ⌥
           </td>
         </tr>
       </table>
 
       <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
         <tr>
-          <td style="width: 55%; padding-right: 20px; border-right: 1px solid #21262d; vertical-align: top;">
-            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 0;">À propos</h3>
-            <p style="text-align: justify;">${aboutP1}</p>
-            <p style="text-align: justify;">${aboutP2}</p>
-            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 20px;">Expériences</h3>
-            <div>${experienceHtml}</div>
+          <td style="width: 54%; padding-right: 22px; border-right: 1px solid #21262d; vertical-align: top;">
+            <div style="margin-bottom: 22px;">
+              <h3 class="pdf-section-title">À propos</h3>
+              <div style="color: #8b949e; text-align: justify; font-size: 10.5px; line-height: 1.55;">
+                <p style="margin: 0 0 8px 0;">${aboutP1}</p>
+                <p style="margin: 0;">${aboutP2}</p>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="pdf-section-title" style="margin-top: 10px;">Expériences</h3>
+              <div class="pdf-timeline">${experienceHtml}</div>
+            </div>
           </td>
-          <td style="width: 45%; padding-left: 20px; vertical-align: top;">
-            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 0;">Compétences</h3>
-            <div>${skillsHtml}</div>
-            <h3 style="color: #f0f6fc; text-transform: uppercase; border-bottom: 1px solid #30363d; padding-bottom: 5px; margin-top: 20px;">Projets</h3>
-            <div>${projectsHtml}</div>
+          
+          <td style="width: 46%; padding-left: 22px; vertical-align: top;">
+            <div style="margin-bottom: 22px;">
+              <h3 class="pdf-section-title">Compétences</h3>
+              <div class="pdf-skills">${skillsHtml}</div>
+            </div>
+
+            <div>
+              <h3 class="pdf-section-title" style="margin-top: 10px;">Projets Clés</h3>
+              <div class="pdf-projects">${projectsHtml}</div>
+            </div>
           </td>
         </tr>
       </table>
     </div>
   `;
 
-  // 4. Injection PHYSIQUE ET VISIBLE au premier plan pour forcer le rendu du navigateur
+  // 4. Injection éphémère au premier plan
   const tempContainer = document.createElement('div');
   tempContainer.style.position = 'fixed';
   tempContainer.style.top = '0';
   tempContainer.style.left = '0';
   tempContainer.style.width = '100vw';
   tempContainer.style.height = '100vh';
-  tempContainer.style.backgroundColor = '#0d1117'; // Cache temporairement le site dessous
+  tempContainer.style.backgroundColor = '#0d1117';
   tempContainer.style.zIndex = '999999';
   tempContainer.style.overflow = 'auto';
-  tempContainer.innerHTML = `<div style="width: 750px; margin: 0 auto;">${pdfTemplate}</div>`;
+  tempContainer.innerHTML = `<div style="width: 800px; margin: 0 auto;">${pdfTemplate}</div>`;
   document.body.appendChild(tempContainer);
 
-  // 5. Options d'impression standardisées
+  // 5. Configuration A4 Strict
   const options = {
-    margin:       10,
+    margin:       [12, 12, 12, 12], // Marges équilibrées (Haut, Gauche, Bas, Droite)
     filename:     `CV_Ferdinand_Zafitsara_${currentLang.toUpperCase()}.pdf`,
     image:        { type: 'jpeg', quality: 0.98 },
     html2canvas:  { 
-      scale: 2, 
+      scale: 2, // Haute définition pour éviter le flou d'impression
       useCORS: true,
       backgroundColor: '#0d1117',
       scrollY: 0,
       scrollX: 0
     },
-    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak:    { mode: ['css', 'legacy'] } // Active la détection intelligente des sauts de ligne CSS
   };
 
-  // 6. Laisser 50ms au moteur pour afficher le bloc, capturer, puis détruire l'élément
+  // 6. Rendu et destruction de la copie de travail
   setTimeout(() => {
     html2pdf().set(options).from(document.getElementById('pdf-real-render')).save().then(() => {
       document.body.removeChild(tempContainer);
