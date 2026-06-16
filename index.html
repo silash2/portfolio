@@ -957,9 +957,9 @@ function generatePDF() {
   if (document.getElementById('btn-en')?.classList.contains('active')) currentLang = 'en';
   if (document.getElementById('btn-de')?.classList.contains('active')) currentLang = 'de';
 
-  // 2. Récupérer les textes traduits depuis le DOM actuel
+  // 2. Récupérer les textes du DOM
   const tagline = document.querySelector('.hero-tag')?.innerText || '';
-  const subKeywords = document.querySelector('.hero-sub')?.innerText || ''; // Utilisation de innerText pour nettoyer les puces du web
+  const subKeywords = document.querySelector('.hero-sub')?.innerText || '';
   const aboutP1 = document.querySelector('[data-i18n="about_p1"]')?.innerHTML || '';
   const aboutP2 = document.querySelector('[data-i18n="about_p2"]')?.innerHTML || '';
   
@@ -967,47 +967,53 @@ function generatePDF() {
   const skillsHtml = document.querySelector('.skills-grid')?.innerHTML || '';
   const projectsHtml = document.querySelector('.projects-grid')?.innerHTML || '';
 
-  // 3. Construire le template HTML épuré avec isolation CSS complète
+  // 3. Template HTML avec CSS de secours et gestion d'erreur d'image inline
   const pdfTemplate = `
-    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #c9d1d9; background-color: #0d1117; padding: 30px; font-size: 11px; width: 750px; box-sizing: border-box; line-height: 1.5;">
+    <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #c9d1d9; background-color: #0d1117; padding: 30px; font-size: 11px; width: 750px; box-sizing: border-box; line-height: 1.5; display: block !important;">
       
-      <!-- Styles correctifs injectés uniquement pour le PDF -->
       <style>
-        /* Nettoyage des animations et forçage de la visibilité */
-        .reveal { opacity: 1 !important; transform: none !important; visibility: visible !important; transition: none !important; }
-        
+        /* Forcer l'affichage de TOUT le contenu injecté pour html2canvas */
+        .pdf-container, .pdf-container *, .pdf-timeline *, .pdf-skills *, .pdf-projects * {
+          visibility: visible !important;
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+          transition: none !important;
+        }
+
         /* Ajustements de la Timeline (Expériences) */
-        .pdf-timeline .tl-item { position: relative; padding-left: 20px; margin-bottom: 15px; }
-        .pdf-timeline .tl-dot { position: absolute; left: 0; top: 4px; width: 6px; height: 6px; background-color: #58a6ff; border-radius: 50%; }
-        .pdf-timeline .tl-category { font-family: monospace; font-size: 9px; color: #58a6ff; font-weight: bold; margin-bottom: 2px; }
-        .pdf-timeline .tl-title { color: #f0f6fc; font-size: 11px; font-weight: bold; }
-        .pdf-timeline .tl-company a { color: #58a6ff; text-decoration: none; }
-        .pdf-timeline .tl-period { font-size: 10px; color: #8b949e; margin: 2px 0; font-style: italic; }
-        .pdf-timeline .tl-bullets { margin: 5px 0 0 12px; padding: 0; color: #8b949e; }
-        .pdf-timeline .tl-bullets li { margin-bottom: 3px; }
+        .pdf-timeline .tl-item { position: relative; padding-left: 20px; margin-bottom: 15px; display: block !important; }
+        .pdf-timeline .tl-dot { position: absolute; left: 0; top: 4px; width: 6px; height: 6px; background-color: #58a6ff !important; border-radius: 50%; }
+        .pdf-timeline .tl-category { font-family: monospace; font-size: 9px; color: #58a6ff !important; font-weight: bold; margin-bottom: 2px; }
+        .pdf-timeline .tl-title { color: #f0f6fc !important; font-size: 11px; font-weight: bold; }
+        .pdf-timeline .tl-company a { color: #58a6ff !important; text-decoration: none; }
+        .pdf-timeline .tl-period { font-size: 10px; color: #8b949e !important; margin: 2px 0; font-style: italic; }
+        .pdf-timeline .tl-bullets { margin: 5px 0 0 12px; padding: 0; color: #8b949e !important; display: block !important; }
+        .pdf-timeline .tl-bullets li { margin-bottom: 3px; display: list-item !important; }
 
         /* Ajustements des Compétences */
         .pdf-skills { display: block !important; }
-        .pdf-skills .skill-block { margin-bottom: 15px; page-break-inside: avoid; }
-        .pdf-skills svg { fill: #58a6ff !important; margin-right: 6px; float: left; width: 16px; height: 16px; }
-        .pdf-skills .skill-icon { float: left; margin-right: 6px; font-size: 14px; line-height: 16px; }
-        .pdf-skills .skill-cat { color: #f0f6fc; font-weight: bold; margin-bottom: 6px; font-size: 11px; padding-top: 1px; }
+        .pdf-skills .skill-block { margin-bottom: 15px; display: block !important; }
+        .pdf-skills svg { fill: #58a6ff !important; margin-right: 6px; float: left; width: 16px; height: 16px; display: inline-block !important; }
+        .pdf-skills .skill-icon { float: left; margin-right: 6px; font-size: 14px; line-height: 16px; display: inline-block !important; }
+        .pdf-skills .skill-cat { color: #f0f6fc !important; font-weight: bold; margin-bottom: 6px; font-size: 11px; padding-top: 1px; }
         .pdf-skills .skill-tags { display: block !important; clear: both; padding-top: 5px; }
         .pdf-skills .tag { display: inline-block !important; background: #21262d !important; color: #c9d1d9 !important; padding: 2px 6px !important; margin: 2px 3px 2px 0 !important; border-radius: 3px !important; font-size: 9.5px !important; border: 1px solid #30363d !important; }
 
         /* Ajustements des Projets Clés */
-        .pdf-projects .proj-card { background: #161b22 !important; border: 1px solid #30363d !important; padding: 10px; border-radius: 6px; margin-bottom: 10px; page-break-inside: avoid; }
-        .pdf-projects .proj-num { font-family: monospace; font-size: 9px; color: #58a6ff; margin-bottom: 2px; }
+        .pdf-projects .proj-card { background: #161b22 !important; border: 1px solid #30363d !important; padding: 10px; border-radius: 6px; margin-bottom: 10px; display: block !important; }
+        .pdf-projects .proj-num { font-family: monospace; font-size: 9px; color: #58a6ff !important; margin-bottom: 2px; }
         .pdf-projects .proj-title { font-size: 11px; font-weight: bold; margin-bottom: 4px; }
-        .pdf-projects .proj-title a { color: #f0f6fc; text-decoration: none; border-bottom: 1px solid #30363d; }
-        .pdf-projects .proj-desc { color: #8b949e; font-size: 10px; line-height: 1.4; }
+        .pdf-projects .proj-title a { color: #f0f6fc !important; text-decoration: none; }
+        .pdf-projects .proj-desc { color: #8b949e !important; font-size: 10px; line-height: 1.4; }
       </style>
 
       <!-- En-tête -->
       <table style="width: 100%; border-bottom: 2px solid #30363d; padding-bottom: 15px; margin-bottom: 20px;">
         <tr>
           <td style="width: 80px; vertical-align: middle;">
-            <img src="./assets/images/ferdinand.jpg" style="width: 75px; height: 75px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d;" />
+            <!-- Si l'image locale bloque la sécurité du navigateur, on la masque pour sauver le PDF -->
+            <img src="./assets/images/ferdinand.jpg" onerror="this.style.display='none';" style="width: 75px; height: 75px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d;" />
           </td>
           <td style="padding-left: 15px; vertical-align: middle;">
             <div style="color: #58a6ff; font-family: monospace; font-size: 11px; font-weight: bold;">${tagline}</div>
@@ -1022,8 +1028,8 @@ function generatePDF() {
         </tr>
       </table>
 
-      <!-- Corps du CV en deux colonnes (Tableau ultra-stable pour html2canvas) -->
-      <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
+      <!-- Corps du CV -->
+      <table style="width: 100%; table-layout: fixed; border-collapse: collapse;" class="pdf-container">
         <tr>
           <!-- Colonne Gauche (55%) -->
           <td style="width: 55%; padding-right: 20px; border-right: 1px solid #21262d; vertical-align: top;">
@@ -1058,40 +1064,37 @@ function generatePDF() {
     </div>
   `;
 
-  // 4. Créer le conteneur temporaire masqué
+  // 4. Créer le conteneur temporaire visible au pixel près mais en arrière-plan
   const tempContainer = document.createElement('div');
-  tempContainer.style.position = 'fixed';
+  tempContainer.style.position = 'absolute';
   tempContainer.style.top = '0';
-  tempContainer.style.left = '0';
-  tempContainer.style.width = '750px';
-  tempContainer.style.opacity = '0';
-  tempContainer.style.pointerEvents = 'none';
-  tempContainer.style.zIndex = '-9999';
+  tempContainer.style.left = '-9999px'; // Décalé sur le côté pour ne pas casser le rendu géométrique
   tempContainer.innerHTML = pdfTemplate;
   document.body.appendChild(tempContainer);
 
-  // 5. Options de rendu stabilisées pour A4 (équilibrage des marges à 0 pour laisser notre padding gérer)
+  // 5. Configuration simplifiée au maximum (Ultra-stable)
   const options = {
-    margin:       0,
+    margin:       10,
     filename:     `CV_Ferdinand_Zafitsara_${currentLang.toUpperCase()}.pdf`,
-    image:        { type: 'jpeg', quality: 0.98 },
+    image:        { type: 'jpeg', quality: 0.95 },
     html2canvas:  { 
-      scale: 2, 
-      useCORS: true,
-      allowTaint: false, // Passer à false évite les blocages de sécurité sur les images locales/distantes
-      logging: false,
-      letterRendering: true
+      scale: 1.5, // Baissé légèrement pour éviter les saturations mémoires du Canvas
+      useCORS: false, 
+      allowTaint: true,
+      logging: false
     },
     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
-  // 6. Lancer le rendu puis nettoyer le DOM
-  html2pdf().set(options).from(tempContainer).save().then(() => {
-    document.body.removeChild(tempContainer);
-  }).catch((error) => {
-    console.error("Erreur lors de la génération du PDF :", error);
-    document.body.removeChild(tempContainer);
-  });
+  // 6. Laisser 100ms au DOM pour s'installer puis générer
+  setTimeout(() => {
+    html2pdf().set(options).from(tempContainer).save().then(() => {
+      document.body.removeChild(tempContainer);
+    }).catch((error) => {
+      console.error("Erreur de génération :", error);
+      document.body.removeChild(tempContainer);
+    });
+  }, 100);
 }
 document.querySelectorAll('.about-stats').forEach(el=>statObs.observe(el));
 </script>
