@@ -177,21 +177,49 @@ section:nth-child(even){background:var(--bg2)}
 <div id="cursor-ring"></div>
 <canvas id="stars-canvas"></canvas>
 
+<!-- N'oublie pas d'inclure Font Awesome dans ton <head> si ce n'est pas déjà fait :
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+-->
+
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-logo">FW_ZAFITSARA</div>
   <ul class="nav-links">
-    <li><a href="#about" data-i18n="nav_about">À propos</a></li>
-    <li><a href="#experience" data-i18n="nav_exp">Expérience</a></li>
-    <li><a href="#skills" data-i18n="nav_skills">Compétences</a></li>
-    <li><a href="#projects" data-i18n="nav_projects">Projets</a></li>
-    <li><a href="#education" data-i18n="nav_edu">Formation</a></li>
-    <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+    <li>
+      <a href="#about" data-i18n="nav_about">
+        <i class="fa-solid fa-user"></i> À propos
+      </a>
+    </li>
+    <li>
+      <a href="#experience" data-i18n="nav_exp">
+        <i class="fa-solid fa-briefcase"></i> Expérience
+      </a>
+    </li>
+    <li>
+      <a href="#skills" data-i18n="nav_skills">
+        <i class="fa-solid fa-code"></i> Compétences
+      </a>
+    </li>
+    <li>
+      <a href="#projects" data-i18n="nav_projects">
+        <i class="fa-solid fa-laptop-code"></i> Projets
+      </a>
+    </li>
+    <li>
+      <a href="#education" data-i18n="nav_edu">
+        <i class="fa-solid fa-graduation-cap"></i> Formation
+      </a>
+    </li>
+    <li>
+      <a href="#contact" data-i18n="nav_contact">
+        <i class="fa-solid fa-envelope"></i> Contact
+      </a>
+    </li>
     <li>
       <div class="lang-switcher">
-        <button onclick="setLang('fr')" id="btn-fr" class="active">FR</button>
-        <button onclick="setLang('en')" id="btn-en">EN</button>
-        <button onclick="setLang('de')" id="btn-de">DE</button>
+        <button onclick="setLang('fr')" id="btn-fr" class="active" title="Français">🇲🇫 FR</button>
+        <button onclick="setLang('en')" id="btn-en" title="English">🇬🇧 EN</button>
+        <button onclick="setLang('de')" id="btn-de" title="Deutsch">🇩🇪 DE</button>
       </div>
     </li>
   </ul>
