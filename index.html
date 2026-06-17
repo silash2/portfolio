@@ -1429,6 +1429,30 @@ async function generatePDF() {
       });
   }, 60);
 }
+// 1. Bloquer le clic droit (Inspecter / Enregistrer l'image)
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+});
+
+// 2. Bloquer les raccourcis clavier des outils de développement
+document.addEventListener('keydown', (e) => {
+  // Bloquer F12
+  if (e.key === 'F12') {
+    e.preventDefault();
+  }
+
+  // Bloquer Ctrl + Shift + I (Inspecter)
+  // Bloquer Ctrl + Shift + J (Console)
+  // Bloquer Ctrl + Shift + C (Inspecter un élément)
+  if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+    e.preventDefault();
+  }
+
+  // Bloquer Ctrl + U (Afficher le code source de la page)
+  if (e.ctrlKey && e.key === 'u') {
+    e.preventDefault();
+  }
+});
 </script>
 </body>
 </html>
