@@ -230,12 +230,37 @@ section:nth-child(even){background:var(--bg2)}
   box-shadow: 0 0 8px rgba(88, 166, 255, 0.6);
 }
 
-@media(max-width:768px){
-  nav{padding:.9rem 1.25rem}
-  .nav-links a{display:none}
-  section{padding:4rem 1.25rem}
-  #hero{padding:0 1.25rem}
-  .about-stats{grid-template-columns:1fr 1fr}
+@media (max-width: 768px) {
+  nav {
+    /* Utilisation de clamp ou de % pour éviter les paddings trop grands sur micro-écrans */
+    padding: 0.9rem 4%; 
+  }
+
+  .nav-links a {
+    display: none; /* Cache les liens pour un menu burger (pensez à un bouton pour l'ouvrir !) */
+  }
+
+  section {
+    padding: 3rem 4%; /* Réduction légère du padding vertical sur mobile */
+  }
+
+  #hero {
+    padding: 0 4%;
+    min-height: auto; /* Sécurité pour éviter que le contenu ne dépasse */
+  }
+
+  .about-stats {
+    /* S'adapte sur 2 colonnes, mais passe sur 1 colonne si l'écran est minuscule (< 350px) */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1rem; 
+  }
+}
+
+/* Optionnel : Ajustement pour les très petits smartphones (Écrans < 360px) */
+@media (max-width: 360px) {
+  .about-stats {
+    grid-template-columns: 1fr; /* Une seule colonne si l'écran est vraiment étroit */
+  }
 }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
