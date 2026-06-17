@@ -1122,13 +1122,41 @@ margin-bottom: 16px;  border-radius: 6px; display: block; width: 100%; }
   };
 
   // 6. Rendu et nettoyage
+  // ✅ APRÈS — étape 6 avec numéros de page
   setTimeout(() => {
-    html2pdf().set(options).from(document.getElementById('pdf-real-render')).save().then(() => {
-      document.body.removeChild(tempContainer);
-    }).catch((error) => {
-      console.error("Erreur d'exportation :", error);
-      document.body.removeChild(tempContainer);
-    });
+    html2pdf()
+      .set(options)
+      .from(document.getElementById('pdf-real-render'))
+      .toPdf()
+      .get('pdf')
+      .then((pdf) => {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
+          pdf.setFontSize(8);
+          pdf.setTextColor(139, 148, 158);   // couleur #8b949e (gris du thème)
+
+          const pageWidth  = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+
+          // Centré en bas de page, au-dessus du bas de marge
+          pdf.text(
+            `${i} / ${totalPages}`,
+            pageWidth / 2,
+            pageHeight - 6,
+            { align: 'center' }
+          );
+        }
+      })
+      .save()
+      .then(() => {
+        document.body.removeChild(tempContainer);
+      })
+      .catch((error) => {
+        console.error("Erreur d'exportation :", error);
+        document.body.removeChild(tempContainer);
+      });
   }, 60);
 }
 </script>
