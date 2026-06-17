@@ -892,6 +892,16 @@ const T = {
   }
 };
 
+function getImageBase64(url) {
+  return fetch(url)
+    .then(res => res.blob())
+    .then(blob => new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    }));
+}
 /* ── i18n ENGINE ──────────────────────────────────────────── */
 let currentLang = 'fr';
 
@@ -963,7 +973,8 @@ const statObs=new IntersectionObserver(entries=>{
 
 document.querySelectorAll('.about-stats').forEach(el=>statObs.observe(el));
 
-function generatePDF() {
+async function generatePDF() {
+  const photoBase64 = await getImageBase64('assets/images/wenceslas.jpg');
   // 1. Détecter la langue active
   let currentLang = 'fr';
   if (document.getElementById('btn-en')?.classList.contains('active')) currentLang = 'en';
@@ -1051,11 +1062,27 @@ function generatePDF() {
       <!-- En-tête -->
       <table style="width: 100%; border-bottom: 1px solid #30363d; padding-bottom: 20px; margin-bottom: 25px; border-collapse: collapse;">
         <tr>
-          <td style="vertical-align: top;">
-            <div style="color: #58a6ff; font-family: monospace; font-weight: 700; font-size: 10.5px; letter-spacing: 0.5px;">${tagline}</div>
-            <h1 style="color: #f0f6fc; font-size: 24px; margin: 4px 0 2px 0; font-weight: 800; letter-spacing: -0.5px;">FERDINAND WENCESLAS</h1>
-            <div style="color: #8b949e; font-size: 11.5px; font-weight: 500;">${subKeywords}</div>
-          </td>
+          <td style="vertical-align: top; display: flex; align-items: center; gap: 16px;">
+              <img
+                src="${photoBase64}"
+                
+                style="
+                  width: 72px;
+                  height: 72px;
+                  border-radius: 50%;
+                  object-fit: cover;
+                  object-position: center top;
+                  border: 2px solid #30363d;
+                  flex-shrink: 0;
+                "
+              />
+               
+              <div>
+                <div style="color: #58a6ff; font-family: monospace; font-weight: 700; font-size: 10.5px; letter-spacing: 0.5px;">${tagline}</div>
+                <h1 style="color: #f0f6fc; font-size: 24px; margin: 4px 0 2px 0; font-weight: 800; letter-spacing: -0.5px;">FERDINAND WENCESLAS</h1>
+                <div style="color: #8b949e; font-size: 11.5px; font-weight: 500;">${subKeywords}</div>
+              </div>
+            </td>
           <td style="text-align: right; color: #8b949e; font-family: monospace; font-size: 10px; line-height: 1.6; vertical-align: top; width: 220px;">
             <span style="color: #f0f6fc;"> <svg height="10" viewBox="0 0 24 24" width="14" style="fill: currentColor;">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
