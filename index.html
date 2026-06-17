@@ -160,7 +160,7 @@ section:nth-child(even){background:var(--bg2)}
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s,transform .55s}
 .reveal.visible{opacity:1;transform:none}
 
-/* --- BOUTON DE TÉLÉCHARGEMENT CYBERPUNK --- */
+/* --- BOUTON DE TÉLÉCHARGEMENT  --- */
 .btn-download-cyber {
   position: relative;
   background: #161b22;
@@ -327,16 +327,10 @@ section:nth-child(even){background:var(--bg2)}
   }
 }
 
-/* 2. Application de l'animation au bouton */
+/* animation au bouton */
 .lang-dropbtn {
-  /* ... vos styles existants pour le bouton ... */
-  
-  /* Ajout crucial : s'assurer que le bouton a un z-index suffisant 
-     pour que l'ombre passe par-dessus le fond du site */
+  /* Ajout crucial  */
   position: relative; 
-  
-  /* On applique l'animation nommée 'pulsar' */
-  /* 2s = durée d'un cycle, infinite = en boucle, ease-in-out = mouvement doux */
   animation: pulsar 2s infinite ease-in-out;
 }
 
@@ -394,7 +388,7 @@ section:nth-child(even){background:var(--bg2)}
     <div class="lang-dropdown">
     <!-- Le bouton principal avec l'icône planète -->
       <button class="lang-dropbtn" color aria-label="Changer de langue">
-        <span class="current-flag">🇲🇫</span> 
+        <span class="current-flag" class="fa-solid fa-world-globe">🇲🇫</span> 
         <span class="current-lang">FR</span>
       </button>
     
@@ -1427,12 +1421,12 @@ async function generatePDF() {
       });
   }, 60);
 }
-// 1. Bloquer le clic droit (Inspecter / Enregistrer l'image)
+// Bloquer le clic droit (Inspecter / Enregistrer l'image)
 document.addEventListener('contextmenu', (e) => {
   e.preventDefault();
 });
 
-// 2. Bloquer les raccourcis clavier des outils de développement
+// Bloquer les raccourcis clavier des outils de développement
 document.addEventListener('keydown', (e) => {
   // Bloquer F12
   if (e.key === 'F12') {
