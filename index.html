@@ -1367,9 +1367,9 @@ async function generatePDF() {
   tempContainer.innerHTML = `<div style="width: 794px; margin: 0 auto;">${pdfTemplate}</div>`;
   document.body.appendChild(tempContainer);
 
-  // 5. Configuration A4 Strict sans interférence de marges jsPDF
+  // Configuration A4 Strict sans interférence de marges jsPDF
   const options = {
-    margin: [15, 0, 15, 0], // <--- SOLUTION DU PROBLÈME : Aucune marge jsPDF parasite
+    margin: [15, 0, 15, 0],
     filename:     `CV_Ferdinand_Zafitsara_${currentLang.toUpperCase()}.pdf`,
     image:        { type: 'jpeg', quality: 0.98 },
     html2canvas:  { 
@@ -1383,8 +1383,7 @@ async function generatePDF() {
     pagebreak:    { mode: ['css', 'legacy'] }
   };
 
-  // 6. Rendu et nettoyage
-  // ✅ APRÈS — étape 6 avec numéros de page
+  //  Rendu et nettoyage
   setTimeout(() => {
     html2pdf()
       .set(options)
@@ -1397,7 +1396,7 @@ async function generatePDF() {
         for (let i = 1; i <= totalPages; i++) {
           pdf.setPage(i);
           pdf.setFontSize(8);
-          pdf.setTextColor(139, 148, 158);   // couleur #8b949e (gris du thème)
+          pdf.setTextColor(139, 148, 158);   
 
           const pageWidth  = pdf.internal.pageSize.getWidth();
           const pageHeight = pdf.internal.pageSize.getHeight();
