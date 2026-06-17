@@ -32,7 +32,7 @@ body{background:var(--bg);color:var(--txt);font-family:var(--ff-sans);overflow-x
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.9rem 2.5rem;display:flex;align-items:center;justify-content:space-between;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
 nav.scrolled{background:rgba(10,12,16,.92);backdrop-filter:blur(12px);border-color:var(--border)}
 .nav-logo{font-family:var(--ff-mono);font-size:.78rem;letter-spacing:.2em;color:var(--cyan);text-decoration:none}
-.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;padding:0;margin:0}
+.nav-links {display: flex;align-items: center;gap: 2rem;list-style: none;padding: 0;margin: 0 2rem 0 0; /* Ajoute un espace entre les liens et le switcher */}
 .nav-links li{display:flex;align-items:center}
 .nav-links a{font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.12em;color:var(--txt2);text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--cyan)}
@@ -48,7 +48,7 @@ nav.scrolled{background:rgba(10,12,16,.92);backdrop-filter:blur(12px);border-col
 @keyframes scan{0%,100%{transform:translateY(-100%)}50%{transform:translateY(100%)}}
 
 /* LANG SWITCHER */
-.lang-switcher{display:flex;gap:.3rem;align-items:center;margin-left:1.5rem}
+.lang-switcher {display: flex;gap: .3rem;align-items: center;margin-left: auto;margin-right: 0;}
 .lang-switcher button{font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.1em;padding:.28rem .65rem;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--txt2);cursor:pointer;transition:all .2s}
 .lang-switcher button.active,.lang-switcher button:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,200,.07)}
 
@@ -229,33 +229,98 @@ section:nth-child(even){background:var(--bg2)}
   transform: translateY(0);
   box-shadow: 0 0 8px rgba(88, 166, 255, 0.6);
 }
+/* NEW LANG DROPDOWN */
+.lang-dropdown {
+  position: relative;
+  margin-left: auto; /* Pousse le bouton à droite */
+}
+
+/* Le bouton Planète */
+.lang-dropbtn {
+  font-family: var(--ff-mono);
+  font-size: .75rem;
+  letter-spacing: .1em;
+  padding: .4rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--txt2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .5rem; /* Espace entre la planète et le texte FR */
+  transition: all .2s;
+}
+
+.lang-dropbtn i {
+  color: var(--cyan); /* Donne la couleur cyan à votre planète */
+  font-size: 0.85rem;
+}
+
+.lang-dropbtn:hover {
+  border-color: var(--cyan);
+  background: rgba(0,212,200,.03);
+}
+
+/* Le menu caché par défaut */
+.lang-dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0; /* Aligné sur le bord droit pour ne pas déborder de l'écran */
+  top: 100%;
+  margin-top: .5rem;
+  background: rgba(10, 12, 16, 0.96); /* Fond sombre comme votre nav scrolled */
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  min-width: 90px;
+  z-index: 200;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  flex-direction: column;
+}
+
+/* Affiche le menu au survol sur PC, ou quand on clique/focus dessus */
+.lang-dropdown:hover .lang-dropdown-content,
+.lang-dropdown:focus-within .lang-dropdown-content {
+  display: flex;
+}
+
+/* Boutons à l'intérieur du menu */
+.lang-dropdown-content button {
+  background: transparent;
+  border: none;
+  color: var(--txt2);
+  padding: .6rem 1rem;
+  text-align: left;
+  font-family: var(--ff-mono);
+  font-size: .7rem;
+  cursor: pointer;
+  width: 100%;
+  transition: all .2s;
+}
+
+.lang-dropdown-content button:hover,
+.lang-dropdown-content button.active {
+  color: var(--cyan);
+  background: rgba(0,212,200,.07);
+}
 
 @media (max-width: 768px) {
   nav {
-    /* Utilisation de clamp ou de % pour éviter les paddings trop grands sur micro-écrans */
     padding: 0.9rem 4%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .nav-links a {
-    display: none; /* Cache les liens pour un menu burger (pensez à un bouton pour l'ouvrir !) */
+  .nav-links {
+    display: none; /* Cache les autres liens de navigation */
   }
 
-  section {
-    padding: 3rem 4%; /* Réduction légère du padding vertical sur mobile */
-  }
-
-  #hero {
-    padding: 0 4%;
-    min-height: auto; /* Sécurité pour éviter que le contenu ne dépasse */
-  }
-
-  .about-stats {
-    /* S'adapte sur 2 colonnes, mais passe sur 1 colonne si l'écran est minuscule (< 350px) */
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 1rem; 
+  .lang-dropdown {
+    margin-left: 0; /* Plus besoin de pousser, flexbox gère l'espace */
   }
 }
-
 /* Optionnel : Ajustement pour les très petits smartphones (Écrans < 360px) */
 @media (max-width: 360px) {
   .about-stats {
@@ -277,46 +342,31 @@ section:nth-child(even){background:var(--bg2)}
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="nav-logo">FW_ZAFITSARA</div>
+  <div class="nav-logo">ZFW_</div>
+  
   <ul class="nav-links">
-    <li>
-      <a href="#about" data-i18n="nav_about">
-        <i class="fa-solid fa-user"></i> À propos
-      </a>
-    </li>
-    <li>
-      <a href="#experience" data-i18n="nav_exp">
-        <i class="fa-solid fa-briefcase"></i> Expérience
-      </a>
-    </li>
-    <li>
-      <a href="#skills" data-i18n="nav_skills">
-        <i class="fa-solid fa-code"></i> Compétences
-      </a>
-    </li>
-    <li>
-      <a href="#projects" data-i18n="nav_projects">
-        <i class="fa-solid fa-laptop-code"></i> Projets
-      </a>
-    </li>
-    <li>
-      <a href="#education" data-i18n="nav_edu">
-        <i class="fa-solid fa-graduation-cap"></i> Formation
-      </a>
-    </li>
-    <li>
-      <a href="#contact" data-i18n="nav_contact">
-        <i class="fa-solid fa-envelope"></i> Contact
-      </a>
-    </li>
-    <li>
-      <div class="lang-switcher">
-        <button onclick="setLang('fr')" id="btn-fr" class="active" title="Français">🇲🇫 FR</button>
-        <button onclick="setLang('en')" id="btn-en" title="English">🇬🇧 EN</button>
-        <button onclick="setLang('de')" id="btn-de" title="Deutsch">🇩🇪 DE</button>
-      </div>
-    </li>
+    <li><a href="#about" data-i18n="nav_about"><i class="fa-solid fa-user"></i> À propos</a></li>
+    <li><a href="#experience" data-i18n="nav_exp"><i class="fa-solid fa-briefcase"></i> Expérience</a></li>
+    <li><a href="#skills" data-i18n="nav_skills"><i class="fa-solid fa-code"></i> Compétences</a></li>
+    <li><a href="#projects" data-i18n="nav_projects"><i class="fa-solid fa-laptop-code"></i> Projets</a></li>
+    <li><a href="#education" data-i18n="nav_edu"><i class="fa-solid fa-graduation-cap"></i> Formation</a></li>
+    <li><a href="#contact" data-i18n="nav_contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
   </ul>
+
+    <div class="lang-dropdown">
+    <!-- Le bouton principal avec l'icône planète -->
+      <button class="lang-dropbtn" aria-label="Changer de langue">
+        <span class="current-flag">🇲🇫</span> 
+        <span class="current-lang">FR</span>
+      </button>
+    
+      <!-- Les options qui apparaissent au survol/clic -->
+        <div class="lang-dropdown-content">
+          <button onclick="setLang('fr')" id="btn-fr" class="active">🇲🇫 FR</button>
+          <button onclick="setLang('en')" id="btn-en">🇬🇧 EN</button>
+          <button onclick="setLang('de')" id="btn-de">🇩🇪 DE</button>
+        </div>
+    </div>
 </nav>
 
 <!-- HERO -->
@@ -933,7 +983,28 @@ let currentLang = 'fr';
 function setLang(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
-  ['fr','en','de'].forEach(l => document.getElementById('btn-'+l).classList.toggle('active', l===lang));
+  
+  // Gère l'activation des boutons (FR, EN, DE) dans le menu déroulant
+  ['fr','en','de'].forEach(l => {
+    const btn = document.getElementById('btn-' + l);
+    if (btn) btn.classList.toggle('active', l === lang);
+  });
+
+  // Correspondance entre le code langue et l'émoji drapeau
+  const flags = {
+    fr: '🇲🇫',
+    en: '🇬🇧',
+    de: '🇩🇪'
+  };
+
+  // NOUVEAU : Met à jour le drapeau ET le texte du bouton principal
+  const currentFlagSpan = document.querySelector('.current-flag');
+  const currentLangSpan = document.querySelector('.current-lang');
+  
+  if (currentFlagSpan) currentFlagSpan.textContent = flags[lang];
+  if (currentLangSpan) currentLangSpan.textContent = lang.toUpperCase();
+
+  // Applique les traductions aux éléments HTML dotés de [data-i18n]
   const t = T[lang];
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
