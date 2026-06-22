@@ -110,15 +110,81 @@ section:nth-child(even){background:var(--bg2)}
 .tl-bullets li{font-size:.87rem;color:var(--txt2);line-height:1.7;padding-left:1rem;position:relative;margin-bottom:.3rem}
 .tl-bullets li::before{content:'›';position:absolute;left:0;color:var(--cyan)}
 
-/* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
-.skill-block{background:var(--bg3);border:1px solid var(--border);padding:1.75rem;transition:border-color .2s}
-.skill-block:hover{border-color:rgba(0,212,200,.3)}
-.skill-icon{font-size:1.4rem;margin-bottom:.75rem}
-.skill-cat{font-family:var(--ff-mono);font-size:.68rem;letter-spacing:.12em;color:var(--cyan);margin-bottom:1rem}
-.skill-tags{display:flex;flex-wrap:wrap;gap:.4rem}
-.tag{font-family:var(--ff-mono);font-size:.63rem;letter-spacing:.06em;padding:.3rem .65rem;border:1px solid var(--border);color:var(--txt2);transition:all .2s}
-.tag:hover{border-color:var(--cyan);color:var(--cyan)}
+/* SKILLS - IMPROVED */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.skill-block {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+  transition: border-color 0.2s;
+}
+
+.skill-block:hover {
+  border-color: rgba(0, 212, 200, 0.3);
+}
+
+.skill-icon {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.skill-cat {
+  font-family: var(--ff-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--cyan);
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* SUBCATEGORIES */
+.skill-subcategory {
+  margin-bottom: 1.15rem;
+}
+
+.skill-subcategory:last-child {
+  margin-bottom: 0;
+}
+
+.subcategory-label {
+  font-family: var(--ff-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(0, 212, 200, 0.75);
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* TAGS */
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag {
+  font-family: var(--ff-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--border);
+  color: var(--txt2);
+  transition: all 0.2s;
+  border-radius: 2px;
+}
+
+.tag:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0, 212, 200, 0.05);
+}
 
 /* PROJECTS */
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
@@ -477,6 +543,34 @@ section:nth-child(even){background:var(--bg2)}
     <div class="timeline">
 
       <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-category" data-i18n="cat_mkt">MARKETING DIGITAL &amp; RÉSEAUX SOCIAUX</div>
+          <div class="tl-title" data-i18n="exp6_title">Meta Ads Manager &amp; Spécialiste Marketing Digital - <span class="tl-company">Phonexpress42</span></div>
+          <div class="tl-period" data-i18n="exp6_period">Mars 2025 - Juin 2026</div>
+          <ul class="tl-bullets">
+            <li data-i18n="exp6_b1">Planification, création et gestion de campagnes publicitaires Facebook/Instagram via Meta Ads Manager.</li>
+            <li data-i18n="exp6_b2">Conception de visuels promotionnels et production de vidéos 30s pour Facebook et Instagram Reels.</li>
+            <li data-i18n="exp6_b3">Configuration de Meta Business Suite et messagerie automatisée sur WhatsApp et Facebook Messenger.</li>
+            <li data-i18n="exp6_b4">Publication de contenu social media, suivi de l'engagement et maintien d'une présence en ligne cohérente.</li>
+            <li data-i18n="exp6_b5">Analyse des métriques de campagne (portée, clics, conversions) et ajustement des stratégies pour maximiser le ROI.</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-category" data-i18n="cat_ops">GESTION OPÉRATIONNELLE &amp; ADMINISTRATION</div>
+          <div class="tl-title" data-i18n="exp7_title">Business Analyst &amp; E-commerce Manager - <span class="tl-company">Boutique Matériel Informatique en Ligne</span></div>
+          <div class="tl-period" data-i18n="exp7_period">Juin 2025 - Fév. 2026</div>
+          <ul class="tl-bullets">
+            <li data-i18n="exp7_b1">Analyse des processus internes et reporting automatisé sous Google Sheets (dashboards, KPI) pour le suivi en temps réel des ventes et des stocks.</li>
+            <li data-i18n="exp7_b2">Gestion des boutiques sur Shopify, Amazon, eBay, Rakuten et OnBuy : fiches produits, synchronisation des stocks et suivi des commandes.</li>
+            <li data-i18n="exp7_b3">Optimisation SEO on-page (titres, descriptions, métadonnées, linking) pour améliorer la visibilité organique et les conversions.</li>
+            <li data-i18n="exp7_b4">Contribution à l'amélioration de l'UX/UI e-commerce : analyse comportementale, optimisation de la navigation et des pages produits.</li>
+            <li data-i18n="exp7_b5">Documentation des processus, procédures marketplace, guidelines SEO et workflows d'automatisation.</li>
+          </ul>
+        </div>
+
+      <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-category" data-i18n="cat_dev">DÉVELOPPEMENT WEB &amp; SOLUTIONS DIGITALES</div>
         <div class="tl-title">Front-End Developer - <span class="tl-company"><a href="https://www.bailti.fr" target="_blank">BAILTI</a></span></div>
@@ -544,54 +638,184 @@ section:nth-child(even){background:var(--bg2)}
       <div class="section-line"></div>
     </div>
     <div class="skills-grid">
+      
+      <!-- FRONTEND DEVELOPMENT -->
       <div class="skill-block reveal">
         <svg height="24" viewBox="0 0 24 24" width="24" style="fill: currentColor; vertical-align: middle;">
           <path d="M7 2v11h3v9l7-12h-4l4-8H7z"/>
         </svg>
-        <div class="skill-cat" data-i18n="skill_cat1">Développement Web</div>
-        <div class="skill-tags">
-          <span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">ReactJS</span>
-          <span class="tag">NextJS</span><span class="tag">Bootstrap</span><span class="tag">Tailwind CSS</span>
-          <span class="tag">ShadcnUI</span><span class="tag">Express JS</span><span class="tag">PHP</span>
-          <span class="tag">Laravel</span><span class="tag">Symfony 5</span><span class="tag">SQL</span>
+        <div class="skill-cat" data-i18n="skill_cat1">Frontend Development</div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Languages</div>
+          <div class="skill-tags">
+            <span class="tag">HTML5</span>
+            <span class="tag">CSS3</span>
+            <span class="tag">JavaScript (ES6+)</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Frameworks & Libraries</div>
+          <div class="skill-tags">
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">UI Frameworks</div>
+          <div class="skill-tags">
+            <span class="tag">Tailwind CSS</span>
+            <span class="tag">Bootstrap</span>
+            <span class="tag">ShadcnUI</span>
+          </div>
         </div>
       </div>
+
+      <!-- BACKEND DEVELOPMENT -->
       <div class="skill-block reveal">
         <svg height="24" viewBox="0 0 24 24" width="24" style="fill: currentColor; vertical-align: middle;">
           <path d="M11.93 2.02c-2.61 0-4.52.23-5.35.63-.84.4-1.46 1.14-1.74 2.14-.38 1.34-.35 2.8-.35 4.18h3.9c0-.23-.01-.48-.01-.73 0-1.29.35-2.22 1.48-2.22H13.1c.96 0 1.63.63 1.63 1.57v2.13h3.53c1.39 0 2.88-.03 4.17.36 1 .3 1.74.92 2.15 1.76.4.83.63 2.7.63 5.3v.44c0-2.62-.23-4.52-.63-5.36-.4-.83-1.14-1.46-2.14-1.74-1.34-.38-2.8-.35-4.18-.35H14.5c0 .23.01.48.01.73 0 1.29-.35 2.22-1.48 2.22H9.78c-.96 0-1.63-.63-1.63-1.57v-2.13H4.62c-1.39 0-2.88.03-4.17-.36-1-.3-1.74-.92-2.15-1.76C.1 13.06 0 11.22 0 8.62v-.44c0 2.61.23 4.52.63 5.35.4.84 1.14 1.46 2.14 1.74 1.34.38 2.8.35 4.18.35h3.9c0-.23-.01-.48-.01-.73 0-1.29.35-2.22 1.48-2.22H16c.96 0 1.63.63 1.63 1.57v2.13h3.53c1.39 0 2.88-.03 4.17.36 1 .3 1.74.92 2.15 1.76.4.83.63 2.7.63 5.3v.44c0-2.61-.23-4.52-.63-5.35-.4-.84-1.14-1.46-2.14-1.74-1.34-.38-2.8-.35-4.18-.35H13.1c0 .23.01.48.01.73 0 1.29-.35 2.22-1.48 2.22H9.78c-.96 0-1.63-.63-1.63-1.57V8.62H4.62c-1.39 0-2.88.03-4.17-.36-1-.3-1.74-.92-2.15-1.76C.1 5.66 0 3.82 0 1.22v-.44c0 2.61.23 4.52.63 5.35.4.84 1.14 1.46 2.14 1.74 1.34.38 2.8.35 4.18.35h3.9c0-.23-.01-.48-.01-.73 0-1.29.35-2.22 1.48-2.22H11.93zM9 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm6 12a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
         </svg>
-        <div class="skill-cat" data-i18n="skill_cat2">Programmation &amp; Automatisation</div>
-        <div class="skill-tags">
-          <span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Openpyxl</span><span class="tag">VBA</span>
+        <div class="skill-cat" data-i18n="skill_cat2">Backend Development</div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Languages</div>
+          <div class="skill-tags">
+            <span class="tag">JavaScript (Node.js)</span>
+            <span class="tag">PHP</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Frameworks</div>
+          <div class="skill-tags">
+            <span class="tag">Express.js</span>
+            <span class="tag">NestJS</span>
+            <span class="tag">Laravel</span>
+            <span class="tag">Symfony 5</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Databases</div>
+          <div class="skill-tags">
+            <span class="tag">SQL</span>
+          </div>
         </div>
       </div>
+
+      <!-- PROGRAMMING & AUTOMATION -->
       <div class="skill-block reveal">
         <svg height="24" viewBox="0 0 24 24" width="24" style="fill: currentColor; vertical-align: middle;">
-          <path d="M12 3a9 9 0 0 0-9 9c0 4.97 4.03 9 9 9 .73 0 1.39-.44 1.69-1.08.29-.61.14-1.34-.38-1.78-.4-.34-.66-.84-.66-1.39 0-1.01.82-1.83 1.83-1.83H16c2.21 0 4-1.79 4-4 0-4.41-3.59-8-8-8zm-4.5 9c-.83 0-1.5-.67-1.5-1.5S6.67 9 7.5 9s1.5.67 1.5 1.5S8.33 12 7.5 12zm3-3c-.83 0-1.5-.67-1.5-1.5S9.67 6 10.5 6s1.5.67 1.5 1.5S11.33 9 10.5 9zm4 0c-.83 0-1.5-.67-1.5-1.5S13.67 6 14.5 6s1.5.67 1.5 1.5S15.33 9 14.5 9zm3 3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+          <path d="M9.4 16.6L4.8 12l4.6-4.6-1.4-1.4L2 12l6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6 1.4-1.4L22 12l-6 6-1.4-1.4z"/>
         </svg>
-        <div class="skill-cat" data-i18n="skill_cat3">Design &amp; Outils</div>
-        <div class="skill-tags">
-          <span class="tag">Figma</span><span class="tag">Adobe Illustrator</span><span class="tag">Photoshop CS6</span>
-          <span class="tag">Git</span><span class="tag">VS Code</span>
+        <div class="skill-cat" data-i18n="skill_cat3">Programming & Automation</div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Languages</div>
+          <div class="skill-tags">
+            <span class="tag">Python</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Libraries & Tools</div>
+          <div class="skill-tags">
+            <span class="tag">OpenCV</span>
+            <span class="tag">Openpyxl</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Office Automation</div>
+          <div class="skill-tags">
+            <span class="tag">VBA</span>
+          </div>
         </div>
       </div>
+
+      <!-- DATA & ANALYTICS -->
       <div class="skill-block reveal">
         <svg height="24" viewBox="0 0 24 24" width="24" style="fill: currentColor; vertical-align: middle;">
           <path d="M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z"/>
         </svg>
-        <div class="skill-cat" data-i18n="skill_cat4">Analyse de Données &amp; Gestion</div>
-        <div class="skill-tags">
-          <span class="tag">R</span><span class="tag">Tableau</span><span class="tag">Excel (KPI)</span><span class="tag">Lean Manufacturing</span>
+        <div class="skill-cat" data-i18n="skill_cat4">Data & Analytics</div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Languages</div>
+          <div class="skill-tags">
+            <span class="tag">R</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Tools & Platforms</div>
+          <div class="skill-tags">
+            <span class="tag">Tableau</span>
+            <span class="tag">Excel (Advanced)</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Methodologies</div>
+          <div class="skill-tags">
+            <span class="tag">Lean Manufacturing</span>
+            <span class="tag">KPI Analysis</span>
+          </div>
         </div>
       </div>
+
+      <!-- DESIGN & TOOLS -->
+      <div class="skill-block reveal">
+        <svg height="24" viewBox="0 0 24 24" width="24" style="fill: currentColor; vertical-align: middle;">
+          <path d="M12 3a9 9 0 0 0-9 9c0 4.97 4.03 9 9 9 .73 0 1.39-.44 1.69-1.08.29-.61.14-1.34-.38-1.78-.4-.34-.66-.84-.66-1.39 0-1.01.82-1.83 1.83-1.83H16c2.21 0 4-1.79 4-4 0-4.41-3.59-8-8-8zm-4.5 9c-.83 0-1.5-.67-1.5-1.5S6.67 9 7.5 9s1.5.67 1.5 1.5S8.33 12 7.5 12zm3-3c-.83 0-1.5-.67-1.5-1.5S9.67 6 10.5 6s1.5.67 1.5 1.5S11.33 9 10.5 9zm4 0c-.83 0-1.5-.67-1.5-1.5S13.67 6 14.5 6s1.5.67 1.5 1.5S15.33 9 14.5 9zm3 3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+        </svg>
+        <div class="skill-cat" data-i18n="skill_cat5">Design & Development Tools</div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Design</div>
+          <div class="skill-tags">
+            <span class="tag">Figma</span>
+            <span class="tag">Adobe Illustrator</span>
+            <span class="tag">Photoshop</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Version Control & IDE</div>
+          <div class="skill-tags">
+            <span class="tag">Git</span>
+            <span class="tag">VS Code</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- INDUSTRIAL TECHNIQUES -->
       <div class="skill-block reveal">
         <div class="skill-icon">🧵</div>
-        <div class="skill-cat" data-i18n="skill_cat5">Techniques Industrielles</div>
-        <div class="skill-tags">
-          <span class="tag">Bartack</span><span class="tag">Overlocker</span><span class="tag">SN / DN</span>
-          <span class="tag">Kansai</span><span class="tag">Bras déporté</span>
+        <div class="skill-cat" data-i18n="skill_cat6">Industrial Techniques</div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Sewing Machines</div>
+          <div class="skill-tags">
+            <span class="tag">Bartack</span>
+            <span class="tag">Overlocker</span>
+            <span class="tag">Kansai</span>
+            <span class="tag">Arm Machine</span>
+          </div>
+        </div>
+        
+        <div class="skill-subcategory">
+          <div class="subcategory-label">Stitch Types</div>
+          <div class="skill-tags">
+            <span class="tag">SN (Single Needle)</span>
+            <span class="tag">DN (Double Needle)</span>
+          </div>
         </div>
       </div>
+      
     </div>
   </div>
 </section>
@@ -814,7 +1038,7 @@ const T = {
     about_p3:'Je mets la technologie au service de l\'<em>optimisation des structures</em> et de la réussite des projets numériques, de la maquette Figma au déploiement en production.',
     stat1:'ANNÉES D\'EXP. TECH', stat2:'PROJETS LIVRÉS', stat3:'TECHNOLOGIES', stat4:'LANGUES PARLÉES',
     s02_title:'Expériences',
-    cat_dev:'DÉVELOPPEMENT WEB &amp; SOLUTIONS DIGITALES', cat_ops:'GESTION OPÉRATIONNELLE &amp; ADMINISTRATION',
+    cat_dev:'DÉVELOPPEMENT WEB &amp; SOLUTIONS DIGITALES', cat_ops:'GESTION OPÉRATIONNELLE &amp; ADMINISTRATION', cat_mkt:'MARKETING DIGITAL &amp; RÉSEAUX SOCIAUX',
     exp1_period:'Oct. 2024 - Fév. 2025',
     exp1_b1:'Participation active au développement de la plateforme de gestion locative (bailti.fr)',
     exp1_b2:'Intégration front-end des maquettes, amélioration continue de l\'UX et collaboration sur les fonctionnalités clés',
@@ -833,6 +1057,20 @@ const T = {
     exp5_period:'Déc. 2022 - Mars 2023',
     exp5_b1:'Supervision quotidienne des flux opérationnels et suivi de la performance budgétaire',
     exp5_b2:'Développement d\'outils de suivi des indicateurs de performance (KPI) en temps réel sur SharePoint Excel avec Python',
+    exp6_title:'Meta Ads Manager &amp; Spécialiste Marketing Digital - <span class="tl-company">Phonexpress42</span>',
+    exp6_period:'Mars 2025 - Juin 2026',
+    exp6_b1:'Planification, création et gestion de campagnes publicitaires Facebook/Instagram via Meta Ads Manager pour augmenter la notoriété et le trafic en boutique.',
+    exp6_b2:'Conception de visuels promotionnels (affiches, bannières) et production de vidéos 30s optimisées pour Facebook et Instagram Reels.',
+    exp6_b3:'Configuration de Meta Business Suite et déploiement de systèmes de messagerie automatisée sur WhatsApp et Facebook Messenger pour améliorer le service client.',
+    exp6_b4:'Publication et planification de contenu social media, suivi de l\'engagement et maintien d\'une présence en ligne cohérente.',
+    exp6_b5:'Analyse des métriques de campagne (portée, engagement, clics, conversions) et ajustement des stratégies pour maximiser le ROI.',
+    exp7_title:'Business Analyst &amp; E-commerce Manager - <span class="tl-company">Boutique Matériel Informatique en Ligne</span>',
+    exp7_period:'Juin 2025 - Fév. 2026',
+    exp7_b1:'Analyse des processus internes et conception d\'outils de reporting automatisés sous Google Sheets (formules avancées, tableaux croisés dynamiques, dashboards) pour le suivi en temps réel des ventes, stocks et KPI.',
+    exp7_b2:'Gestion des boutiques en ligne sur Shopify, Amazon, eBay, Rakuten et OnBuy : création et optimisation des fiches produits, synchronisation des stocks et suivi des commandes.',
+    exp7_b3:'Recherche de mots-clés, analyse concurrentielle et optimisation SEO on-page (titres, descriptions, métadonnées, linking interne) pour améliorer la visibilité organique et les taux de conversion.',
+    exp7_b4:'Contribution à l\'amélioration de l\'UX/UI du site e-commerce : analyse du comportement utilisateur, optimisation de la navigation et des pages produits pour augmenter l\'engagement et les conversions.',
+    exp7_b5:'Collaboration avec les équipes opérations, ventes et direction ; documentation des processus, procédures marketplace, guidelines SEO et workflows d\'automatisation.',
     s03_title:'Compétences',
     skill_cat1:'Développement Web', skill_cat2:'Programmation &amp; Automatisation', skill_cat3:'Design &amp; Outils',
     skill_cat4:'Analyse de Données &amp; Gestion', skill_cat5:'Techniques Industrielles',
@@ -877,7 +1115,7 @@ const T = {
     about_p3:'I harness technology to <em>optimise structures</em> and deliver digital projects successfully - from Figma mockup to production deployment.',
     stat1:'YEARS TECH EXP.', stat2:'PROJECTS DELIVERED', stat3:'TECHNOLOGIES', stat4:'LANGUAGES SPOKEN',
     s02_title:'Experience',
-    cat_dev:'WEB DEVELOPMENT &amp; DIGITAL SOLUTIONS', cat_ops:'OPERATIONS MANAGEMENT &amp; ADMINISTRATION',
+    cat_dev:'WEB DEVELOPMENT &amp; DIGITAL SOLUTIONS', cat_ops:'OPERATIONS MANAGEMENT &amp; ADMINISTRATION', cat_mkt:'DIGITAL MARKETING &amp; SOCIAL MEDIA',
     exp1_period:'Oct. 2024 - Feb. 2025',
     exp1_b1:'Active contribution to the development of the property management platform (bailti.fr)',
     exp1_b2:'Front-end integration of mockups, continuous UX improvement, and collaboration on key features',
@@ -896,6 +1134,20 @@ const T = {
     exp5_period:'Dec. 2022 - Mar. 2023',
     exp5_b1:'Daily supervision of operational flows and budget performance tracking',
     exp5_b2:'Development of real-time KPI tracking tools on SharePoint Excel with Python',
+    exp6_title:'Meta Ads Manager &amp; Digital Marketing Specialist - <span class="tl-company">Phonexpress42</span>',
+    exp6_period:'Mar. 2025 - Jun. 2026',
+    exp6_b1:'Planned, created, and managed advertising campaigns on Facebook and Instagram via Meta Ads Manager to increase brand awareness, customer engagement, and store traffic.',
+    exp6_b2:'Designed promotional visuals (posters, banners) and produced 30-second videos optimised for Facebook and Instagram Reels.',
+    exp6_b3:'Configured Meta Business Suite and deployed automated messaging systems on WhatsApp and Facebook Messenger to improve customer service and response times.',
+    exp6_b4:'Scheduled and published social media content, monitored audience engagement, and maintained a consistent online presence.',
+    exp6_b5:'Analysed campaign performance metrics (reach, engagement, clicks, conversions) and adjusted advertising strategies to maximise ROI.',
+    exp7_title:'Business Analyst &amp; E-commerce Manager - <span class="tl-company">Online Hardware Store</span>',
+    exp7_period:'Jun. 2025 - Feb. 2026',
+    exp7_b1:'Analysed internal business processes and built automated reporting systems in Google Sheets (advanced formulas, pivot tables, dashboards) for real-time monitoring of sales, inventory, and KPIs.',
+    exp7_b2:'Managed online stores across Shopify, Amazon, eBay, Rakuten, and OnBuy: created and optimised product listings, synchronised stock levels, and ensured accurate order fulfilment.',
+    exp7_b3:'Conducted keyword research, competitor analysis, and on-page SEO optimisation (titles, descriptions, metadata, internal linking) to improve search rankings and conversion rates.',
+    exp7_b4:'Contributed to e-commerce UI/UX improvements by analysing user behaviour, optimising navigation, and enhancing product pages to increase engagement and conversions.',
+    exp7_b5:'Collaborated with operations, sales, and management teams; documented processes, marketplace procedures, SEO guidelines, and automation workflows.',
     s03_title:'Skills',
     skill_cat1:'Web Development', skill_cat2:'Programming &amp; Automation', skill_cat3:'Design &amp; Tools',
     skill_cat4:'Data Analysis &amp; Management', skill_cat5:'Industrial Techniques',
@@ -940,7 +1192,7 @@ const T = {
     about_p3:'Ich setze Technologie ein, um <em>Strukturen zu optimieren</em> und digitale Projekte erfolgreich umzusetzen - von der Figma-Vorlage bis zur Produktionsbereitstellung.',
     stat1:'JAHRE TECH-ERFAHRUNG', stat2:'ABGESCHLOSSENE PROJEKTE', stat3:'TECHNOLOGIEN', stat4:'GESPROCHENE SPRACHEN',
     s02_title:'Berufserfahrung',
-    cat_dev:'WEBENTWICKLUNG &amp; DIGITALE LÖSUNGEN', cat_ops:'BETRIEBSMANAGEMENT &amp; VERWALTUNG',
+    cat_dev:'WEBENTWICKLUNG &amp; DIGITALE LÖSUNGEN', cat_ops:'BETRIEBSMANAGEMENT &amp; VERWALTUNG', cat_mkt:'DIGITALES MARKETING &amp; SOZIALE MEDIEN',
     exp1_period:'Okt. 2024 - Feb. 2025',
     exp1_b1:'Aktive Mitarbeit an der Entwicklung der Immobilienverwaltungsplattform (bailti.fr)',
     exp1_b2:'Front-End-Integration von Mockups, kontinuierliche UX-Verbesserung und Zusammenarbeit an Kernfunktionen',
@@ -959,6 +1211,20 @@ const T = {
     exp5_period:'Dez. 2022 - Mär. 2023',
     exp5_b1:'Tägliche Aufsicht über Betriebsabläufe und Budgetperformance-Tracking',
     exp5_b2:'Entwicklung von Echtzeit-KPI-Tracking-Tools in SharePoint Excel mit Python',
+    exp6_title:'Meta Ads Manager &amp; Digital-Marketing-Spezialist - <span class="tl-company">Phonexpress42</span>',
+    exp6_period:'Mär. 2025 - Jun. 2026',
+    exp6_b1:'Planung, Erstellung und Verwaltung von Werbekampagnen auf Facebook und Instagram über den Meta Ads Manager zur Steigerung der Markenbekanntheit und des Ladenverkehrs.',
+    exp6_b2:'Gestaltung von Werbematerialien (Poster, Banner) und Produktion von 30-Sekunden-Videos für Facebook und Instagram Reels.',
+    exp6_b3:'Konfiguration der Meta Business Suite und Einrichtung automatisierter Nachrichtensysteme auf WhatsApp und Facebook Messenger zur Verbesserung des Kundenservice.',
+    exp6_b4:'Planung und Veröffentlichung von Social-Media-Inhalten, Überwachung des Engagements und Pflege einer konsistenten Online-Präsenz.',
+    exp6_b5:'Analyse von Kampagnenkennzahlen (Reichweite, Engagement, Klicks, Conversions) und Anpassung der Werbestrategien zur Maximierung des ROI.',
+    exp7_title:'Business Analyst &amp; E-Commerce-Manager - <span class="tl-company">Online-Hardwareshop</span>',
+    exp7_period:'Jun. 2025 - Feb. 2026',
+    exp7_b1:'Analyse interner Geschäftsprozesse und Entwicklung automatisierter Berichtssysteme in Google Sheets (erweiterte Formeln, Pivot-Tabellen, Dashboards) zur Echtzeit-Überwachung von Umsatz, Bestand und KPIs.',
+    exp7_b2:'Verwaltung von Online-Shops auf Shopify, Amazon, eBay, Rakuten und OnBuy: Erstellung und Optimierung von Produktlistings, Bestandssynchronisierung und Auftragsabwicklung.',
+    exp7_b3:'Keyword-Recherche, Wettbewerbsanalyse und On-Page-SEO-Optimierung (Titel, Beschreibungen, Metadaten, interne Verlinkung) zur Verbesserung von Suchrankings und Konversionsraten.',
+    exp7_b4:'Beitrag zur Verbesserung der UI/UX des E-Commerce-Shops durch Analyse des Nutzerverhaltens, Optimierung der Navigation und Produktseiten.',
+    exp7_b5:'Zusammenarbeit mit Operations-, Vertriebs- und Managementteams; Dokumentation von Prozessen, Marketplace-Verfahren, SEO-Richtlinien und Automatisierungs-Workflows.',
     s03_title:'Fähigkeiten',
     skill_cat1:'Webentwicklung', skill_cat2:'Programmierung &amp; Automatisierung', skill_cat3:'Design &amp; Werkzeuge',
     skill_cat4:'Datenanalyse &amp; Management', skill_cat5:'Industrietechniken',
@@ -994,7 +1260,6 @@ const T = {
     "btn_download": '<i class="fa-solid fa-file-arrow-down"></i> Als PDF herunterladen',
   }
 };
-
 function getImageBase64(url) {
   return fetch(url)
     .then(res => res.blob())
